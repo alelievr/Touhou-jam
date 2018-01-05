@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 65bc1cc5158114bf8b86ffa91701a9b4
+timeCreated: 1515157078
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: SF Shai Fontai Extended
+  fontNames:
+  - SF Shai Fontai Extended
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
