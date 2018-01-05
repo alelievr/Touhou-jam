@@ -8,13 +8,27 @@ public class seikuken : MonoBehaviour {
 	public	GameObject	Limits;
 
 	private	Rigidbody	rb;
-	private	bool		inLimits;	
+	private	bool		inLimits;
+
+	public enum 		edashtype { fuite, throught, right, left, random, randomaxewithouttrought };
+
+	public	bool		candash = false;
+	public	float		dashdist = 10;
+	public	float		dashtime = 0.2f;
+	public	float		dashdisttrigger;
+	public	edashtype	dashtype = edashtype.fuite;
+	private float		dashdisttraveled = 0;
+	public	float		cddash = 5;
+	private float		cdcurrent = 0;
+
+
 	// Use this for initialization
 	void Start () {
 		rb = Dodger.GetComponent<Rigidbody>();
 		inLimits = true;
+		cdcurrent = cddash;
 	}
-	
+
 	void FixedUpdate()
 	{
 		
@@ -24,6 +38,8 @@ public class seikuken : MonoBehaviour {
 	void Update () {
 		Refresh();
 		Dodge();
+		if (cdcurrent >= 0)
+			cdcurrent -= Time.deltaTime;
 	}
 
 	void Refresh()
@@ -31,9 +47,20 @@ public class seikuken : MonoBehaviour {
 		rb.velocity = Vector3.zero;
 	}
 
+	void dash()
+	{
+
+	}
+
+	Vector2 getposmostnear()
+	{
+		
+	}
+
 	void Dodge()
 	{
 		if (inside != null) {
+			if (candash == true && cddash < 0 && )
 			Vector3 dir = new Vector3(0,0);
 			for (int i = 0; i < inside.Count; i++) {
 				// Debug.Log(inside[i].position);
