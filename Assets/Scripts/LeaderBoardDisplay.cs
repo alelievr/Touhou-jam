@@ -42,7 +42,7 @@ public class LeaderBoardDisplay : MonoBehaviour
 			
 			try {
 				cell.UpdateProperties(int.Parse(values[1]), 10000, values[0]);
-			} catch (Exception e){
+			} catch (Exception e) {
 				Debug.LogError(e);
 				Destroy(cell);
 			}
