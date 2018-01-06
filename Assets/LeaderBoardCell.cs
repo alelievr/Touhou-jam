@@ -11,7 +11,6 @@ public class LeaderBoardCell : MonoBehaviour
 
 	public void UpdateProperties(int points, int maxPoints, string name)
 	{
-		Debug.Log("updated !");
 		fillImage.fillAmount = (float)points / (float)maxPoints;
 
 		pointText.text = points + "/" + maxPoints;
