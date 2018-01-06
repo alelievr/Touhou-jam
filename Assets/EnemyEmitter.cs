@@ -17,6 +17,7 @@ public class EnemyEmitter : MonoBehaviour
 	}
 	
 	void Update () {
+		// Debug.Log("audioLevel: " + audioLevelInput);
 		if (audioLevelInput > audioLevelTrigger)
 		{
 			StartCoroutine(SyncToSound());
@@ -26,6 +27,6 @@ public class EnemyEmitter : MonoBehaviour
 	IEnumerator SyncToSound()
 	{
 		yield return new WaitForSeconds(0.00f);
-		emission.rateOverTime = audioLevelInput;
+		particleSystem.Emit(emitCountWhenTriggered);
 	}
 }

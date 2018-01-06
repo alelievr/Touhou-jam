@@ -132,7 +132,7 @@ namespace Lasp
             foreach (var raw in rawAudioSamplesL)
                 sum += raw;
             
-            rms = Mathf.Sqrt(sum / (rawAudioSamplesR.Length + rawAudioSamplesL.Length));
+            rms = Mathf.Sqrt(Mathf.Abs(sum / (rawAudioSamplesR.Length + rawAudioSamplesL.Length)));
         }
 
         static void GetPacked()

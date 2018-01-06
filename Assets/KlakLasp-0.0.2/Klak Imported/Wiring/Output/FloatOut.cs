@@ -57,8 +57,6 @@ namespace Klak.Wiring
 
         void OnEnable()
         {
-            Debug.Log("target: " + _target);
-            Debug.Log("prop: " + _propertyName);
             if (_target == null || string.IsNullOrEmpty(_propertyName)) return;
             _propertyInfo = _target.GetType().GetProperty(_propertyName);
         }
