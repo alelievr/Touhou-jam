@@ -8,7 +8,7 @@ public class seikuken : MonoBehaviour {
 	public	GameObject	Limits;
 
 	private	Rigidbody	rb;
-	private	bool		inLimits;	
+	private	bool		inLimits;
 	// Use this for initialization
 	void Start () {
 		rb = Dodger.GetComponent<Rigidbody>();
@@ -17,13 +17,13 @@ public class seikuken : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
-		
+		Refresh();
+		Dodge();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		Refresh();
-		Dodge();
+		
 	}
 
 	void Refresh()
@@ -37,14 +37,14 @@ public class seikuken : MonoBehaviour {
 			Vector3 dir = new Vector3(0,0);
 			for (int i = 0; i < inside.Count; i++) {
 				// Debug.Log(inside[i].position);
-				dir += transform.position - inside[i].position;
+				dir += -(inside[i].position - transform.position).normalized * (1 - ((inside[i].position - transform.position).magnitude / 1.5f)); // prendre radius
 			}
 			if (!inLimits) {
-				dir += Limits.transform.position - transform.position;
-				Debug.Log(Limits.transform.position - transform.position);
+				dir += (Limits.transform.position - transform.position);
+				// Debug.Log(Limits.transform.position - transform.position);
 			}
-			// Debug.Log(dir);
-			rb.AddForce(dir * 15);
+			Debug.DrawRay(transform.position,dir, Color.green);
+			rb.AddForce(dir * 100);
 		}
 	}
 
