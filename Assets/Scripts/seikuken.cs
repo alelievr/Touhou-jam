@@ -20,10 +20,17 @@ public static class Vector2Extension {
 public class seikuken : MonoBehaviour {
 	public	List<ParticleSystem.Particle> inside;
 	public	GameObject	Dodger;
-	public	GameObject	Limits;
+	// public	GameObject	Limits;
+	public	GameObject	Player;
+
+	[Space]
+	public float		dodgePower;
 
 	private	Rigidbody	rb;
 	private	bool		inLimits;
+	private bool		busy;
+	private	float		starty;
+	private Vector3		dodgerpos;
 
 	public enum 		edashtype { throught, fuite, right, left, randomaxewithouttrought, random};
 
@@ -41,13 +48,16 @@ public class seikuken : MonoBehaviour {
 	void Start () {
 		rb = Dodger.GetComponent<Rigidbody>();
 		inLimits = true;
+		busy = false;
+		starty = transform.position.y;
 		cdcurrent = cddash;
 	}
-
+	
 	void FixedUpdate()
 	{
 		Refresh();
 		Dodge();
+		Move();
 	}
 
 	// Update is called once per frame
@@ -56,13 +66,25 @@ public class seikuken : MonoBehaviour {
 			cdcurrent -= Time.deltaTime;
 	}
 
-	void Refresh()
-	{
+	void Refresh() {
 		rb.velocity = Vector3.zero;
+		busy = false;
 	}
 
-	private Vector2 vectdirdash;
-	private Vector2 destdash;
+	Vector2 getvectomostnear()
+	{
+		Vector2 ret = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
+
+		for (int i = 0; i < inside.Count; i++) {
+				// Debug.Log(inside[i].position);
+				if (ret.magnitude > (transform.position - inside[i].position).magnitude)
+					ret = (transform.position - inside[i].position);
+			}
+		return -ret;
+	}
+
+	/*STATIC*/private Vector2 vectdirdash;
+	/*STATIC*/ private Vector2 destdash;
 
 	void dash(Vector2 vectm)
 	{
@@ -97,27 +119,14 @@ public class seikuken : MonoBehaviour {
 		}
 	}
 
-	Vector2 getvectomostnear()
-	{
-		Vector2 ret = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
-
-		for (int i = 0; i < inside.Count; i++) {
-				// Debug.Log(inside[i].position);
-				if (ret.magnitude > (transform.position - inside[i].position).magnitude)
-					ret = (transform.position - inside[i].position);
-			}
-		return -ret;
+	bool Move() {	
+		return true;
 	}
 
-	void Dodge()
-	{
-		Vector3 dir = new Vector3(0, 0);
-
+	void Dodge() {
+		Vector3 dir = Vector3.zero;
 		if (inside != null) {
 			Vector2 vectmn = getvectomostnear();
-			// Debug.Log(candash);
-			Debug.Log(vectmn.magnitude);
-			// Debug.Log(cdcurrent);
 			if (dashdisttraveled != 0 || (candash == true && cdcurrent 	< 0 && vectmn.magnitude < dashdisttrigger))
 			{
 				Debug.Log("fdsf");
@@ -125,16 +134,61 @@ public class seikuken : MonoBehaviour {
 				return ;
 			}
 			for (int i = 0; i < inside.Count; i++) {
-				// Debug.Log(inside[i].position);
-				dir += -(inside[i].position - transform.position).normalized * (1 - ((inside[i].position - transform.position).magnitude / 1.5f)); // prendre radius
+				// Debug.Log((inside[i].position - transform.position).magnitude);
+				Vector3 delta = inside[i].position - transform.position;
+				Vector3 direction = -delta.normalized;
+				float directionForce = dodgePower / delta.magnitude;
+				Debug.DrawRay(transform.position, direction * directionForce, Color.cyan);
+				dir += direction * directionForce; // prendre radius
 			}
 		}
-		if (!inLimits) {
-			dir += (Limits.transform.position - transform.position);
-			// Debug.Log(Limits.transform.position - transform.position);
-		}
+		// if (!inLimits) {
+		// 	dir += (Limits.transform.position - transform.position);
+		// 	// Debug.Log(Limits.transform.position - transform.position);
+		// }
+		
+		dir = new Vector3(dir.x * 3f, dir.y, dir.z);
+		
+		// reste en face du joueur et ne monte pas trop haut
+		Vector3 targetx = new Vector3(Player.transform.position.x, starty, 0);
+		Vector3 deltaX = targetx - transform.position;
+		Vector3 directionX = deltaX.normalized * Mathf.Clamp(Mathf.Exp(deltaX.magnitude / 3), 0, 1000);
+		Debug.DrawRay(transform.position, directionX, Color.red);
+		dir += directionX;
+
+		Vector3 targety = new Vector3(0, starty, 0);
+		dir += (targety - transform.position) / 1.5f;
 		Debug.DrawRay(transform.position,dir, Color.green);
-		rb.AddForce(dir * 100);
+		
+		if (dir != Vector3.zero){
+			dir = dir * 75;
+			rb.AddForce(new Vector3(Mathf.Clamp(dir.x, -100	, 100	), Mathf.Clamp(dir.y, -100	, 100	), 0));
+		}
+	}
+
+	// void Dodge()
+	// {
+	// 	Vector3 dir = new Vector3(0, 0);
+
+	// 	if (inside != null) {
+	// 		// Debug.Log(candash);
+	// 		Debug.Log(vectmn.magnitude);
+	// 		// Debug.Log(cdcurrent);
+	// 		for (int i = 0; i < inside.Count; i++) {
+	// 			// Debug.Log(inside[i].position);
+	// 			dir += -(inside[i].position - transform.position).normalized * (1 - ((inside[i].position - transform.position).magnitude / 1.5f)); // prendre radius
+	// 		}
+	// 	}
+	// 	if (!inLimits) {
+	// 		dir += (Limits.transform.position - transform.position);
+	// 		// Debug.Log(Limits.transform.position - transform.position);
+	// 	}
+	// 	Debug.DrawRay(transform.position,dir, Color.green);
+	// 	rb.AddForce(dir * 100);
+	// }
+
+	Vector3 getDodgerPos() {
+		return (new Vector3(transform.position.x, transform.position.y + 0.3f, 0));
 	}
 
 	void OnTriggerEnter(Collider other)
