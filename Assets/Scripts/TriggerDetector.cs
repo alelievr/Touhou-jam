@@ -29,6 +29,7 @@ public class TriggerDetector : MonoBehaviour {
         for (int i = 0; i < numInside; i++)
         {
             ParticleSystem.Particle p = inside[i];
+            // Debug.Log(inside[i].position);
             inside[i] = p;
         }
         // iterate through the particles which entered the trigger and make them red
