@@ -9,11 +9,11 @@ public class EnemyEmitter : MonoBehaviour
 	public int				emitCountWhenTriggered = 4;
 
 	new ParticleSystem		particleSystem;
-	ParticleSystem.EmissionModule	emission;
+	// ParticleSystem.EmissionModule	emission;
 
 	void Start () {
 		particleSystem = GetComponent< ParticleSystem >();
-		emission = particleSystem.emission;
+		// emission = particleSystem.emission;
 	}
 	
 	void Update () {
