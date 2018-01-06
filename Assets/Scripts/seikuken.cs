@@ -52,8 +52,6 @@ public class seikuken : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		Refresh();
-		Dodge();
 		if (cdcurrent >= 0)
 			cdcurrent -= Time.deltaTime;
 	}
@@ -90,10 +88,13 @@ public class seikuken : MonoBehaviour {
 
 		// the value of dashtime need to be greater than Time.deltaime (more than once)
 
-		transform.position = Vector2.MoveTowards(transform.position, destdash, dashdist * Time.deltaTime / dashtime);
+		rb.transform.position = Vector2.MoveTowards(transform.position, destdash, dashdist * Time.deltaTime / dashtime);
 		dashdisttraveled += dashdist * Time.deltaTime / dashtime;
 		if (dashdisttraveled >= dashdist)
+		{
 			dashdisttraveled = 0;	
+			cdcurrent = cddash;
+		}
 	}
 
 	Vector2 getvectomostnear()
@@ -105,7 +106,7 @@ public class seikuken : MonoBehaviour {
 				if (ret.magnitude > (transform.position - inside[i].position).magnitude)
 					ret = (transform.position - inside[i].position);
 			}
-		return ret;
+		return -ret;
 	}
 
 	void Dodge()
@@ -114,8 +115,12 @@ public class seikuken : MonoBehaviour {
 
 		if (inside != null) {
 			Vector2 vectmn = getvectomostnear();
-			if (dashdisttraveled != 0 || (candash == true && cddash < 0 && vectmn.magnitude < dashdisttrigger))
+			// Debug.Log(candash);
+			Debug.Log(vectmn.magnitude);
+			// Debug.Log(cdcurrent);
+			if (dashdisttraveled != 0 || (candash == true && cdcurrent 	< 0 && vectmn.magnitude < dashdisttrigger))
 			{
+				Debug.Log("fdsf");
 				dash(vectmn);
 				return ;
 			}
