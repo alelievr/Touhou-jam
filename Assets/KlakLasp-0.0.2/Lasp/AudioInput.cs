@@ -46,7 +46,6 @@ namespace Lasp
         static float[] rawAudioSamplesL = new float[512];
 		static float audioVolume;
         static float rms;
-        static float packed;
 
 		static public float[] frequencyBandR = new float[8];
 		static public float[] frequencyBandL = new float[8];
@@ -132,7 +131,7 @@ namespace Lasp
             foreach (var raw in rawAudioSamplesL)
                 sum += raw;
             
-            rms = Mathf.Sqrt(sum / (rawAudioSamplesR.Length + rawAudioSamplesL.Length));
+            rms = Mathf.Sqrt(Mathf.Abs(sum / (rawAudioSamplesR.Length + rawAudioSamplesL.Length)));
         }
 
         static void GetPacked()
@@ -142,7 +141,7 @@ namespace Lasp
                 sum += Mathf.Abs(raw);
             foreach (var raw in rawAudioSamplesR)
                 sum += Mathf.Abs(raw);
-            packed = sum / 1000f;
+            // packed = sum / 1000f;
         }
 
 		static void GetFrequencyBand(float[] samples, float[] frequencyBand)

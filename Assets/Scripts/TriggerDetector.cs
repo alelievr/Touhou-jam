@@ -12,9 +12,9 @@ public class TriggerDetector : MonoBehaviour {
 
     // these lists are used to contain the particles which match
     // the trigger conditions each frame.
-    List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
-    List<ParticleSystem.Particle> exit = new List<ParticleSystem.Particle>();
-    List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
+    [HideInInspector] public List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
+    [HideInInspector] public List<ParticleSystem.Particle> exit = new List<ParticleSystem.Particle>();
+    [HideInInspector] public List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
 
     void OnEnable()
     {
@@ -54,6 +54,6 @@ public class TriggerDetector : MonoBehaviour {
         // re-assign the modified particles back into the particle system
         ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
         ps.SetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
-        Boss.inside = inside;
+        // Boss.inside = inside;
     }
 }

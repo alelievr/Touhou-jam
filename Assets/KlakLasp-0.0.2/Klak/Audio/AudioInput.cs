@@ -106,7 +106,6 @@ namespace Klak.Audio
 
         // Variables for automatic gain control.
         float _peak = kSilence;
-        float _fall = 0;
 
         #endregion
 
@@ -117,43 +116,6 @@ namespace Klak.Audio
             var input = inputAmplitude;
             _outputEvent.Invoke(input);
             return ;
-            var dt = Time.deltaTime;
-
-            // Automatic gain control
-            if (_autoGain)
-            {
-                // Gradually falls down to the minimum amplitude.
-                const float peakFallSpeed = 0.6f;
-                _peak = Mathf.Max(_peak - peakFallSpeed * dt, kSilence);
-
-                // Pull up by input with allowing a small amount of clipping.
-                var clip = _dynamicRange * 0.05f;
-                _peak = Mathf.Clamp(input - clip, _peak, 0);
-            }
-
-            // Normalize the input value.
-            input = Mathf.Clamp01((input + calculatedGain) / _dynamicRange + 1);
-
-            if (_holdAndFallDown)
-            {
-                // Hold-and-fall-down animation.
-                _fall += Mathf.Pow(10, 1 + _fallDownSpeed * 2) * dt;
-                _amplitude -= _fall * dt;
-
-                // Pull up by input.
-                if (_amplitude < input)
-                {
-                    _amplitude = input;
-                    _fall = 0;
-                }
-            }
-            else
-            {
-                _amplitude = input;
-            }
-
-            // Output
-            _outputEvent.Invoke(_amplitude);
         }
 
         #endregion

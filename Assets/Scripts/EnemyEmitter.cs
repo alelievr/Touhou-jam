@@ -9,14 +9,15 @@ public class EnemyEmitter : MonoBehaviour
 	public int				emitCountWhenTriggered = 4;
 
 	new ParticleSystem		particleSystem;
-	ParticleSystem.EmissionModule	emission;
+	// ParticleSystem.EmissionModule	emission;
 
 	void Start () {
 		particleSystem = GetComponent< ParticleSystem >();
-		emission = particleSystem.emission;
+		// emission = particleSystem.emission;
 	}
 	
 	void Update () {
+		// Debug.Log("audioLevel: " + audioLevelInput);
 		if (audioLevelInput > audioLevelTrigger)
 		{
 			StartCoroutine(SyncToSound());
@@ -26,6 +27,6 @@ public class EnemyEmitter : MonoBehaviour
 	IEnumerator SyncToSound()
 	{
 		yield return new WaitForSeconds(0.00f);
-		emission.rateOverTime = audioLevelInput;
+		particleSystem.Emit(emitCountWhenTriggered);
 	}
 }

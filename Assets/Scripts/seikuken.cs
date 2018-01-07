@@ -19,15 +19,13 @@ public static class Vector2Extension {
 }
 
 public class seikuken : MonoBehaviour {
-	public	List<ParticleSystem.Particle> inside;
+	public	List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
 	public	GameObject	Dodger;
 	// public	GameObject	Limits;
 	public	GameObject	Player;
 
 	[Space]
-	public Slider		HPbar;
-	public Text			score;
-	public Text			timeUi;
+	// public Slider		HPbar;
 	[Space]
 	public float		dodgePower;
 
@@ -37,7 +35,7 @@ public class seikuken : MonoBehaviour {
 	private	float		starty;
 	private Vector3		dodgerpos;
 
-	public enum 		edashtype { throught, fuite, right, left, randomaxewithouttrought, random};
+	public enum 		edashtype { throught, fuite, right, left, randomaxewithouttrought, random, bcissapproved};
 
 	public	bool		candash = false;
 	public	float		dashdist = 3;
@@ -52,24 +50,21 @@ public class seikuken : MonoBehaviour {
 	public	float		speedPower = 75;
 	[Space]
 	private	Text		HPtext;
-	private	Text		scoretext;
 	private	Text		timetext;
 	public	float		pts;
 	public	float		HPmax = 1000000f;
 	public	float		HP;
-	public	float		time;
 
 	// Use this for initialization
 	void Start () {
 		rb = Dodger.GetComponent<Rigidbody>();
-		HPtext = HPbar.GetComponent<Text>();
-		scoretext = score.GetComponent<Text>();
-		timetext = timeUi.GetComponent<Text>();
+		// HPtext = HPbar.GetComponent<Text>();
 		inLimits = true;
 		busy = false;
 		starty = transform.position.y;
 		cdcurrent = cddash;
 		HP = HPmax;
+		inside = new List<ParticleSystem.Particle>();
 	}
 	
 	void FixedUpdate()
@@ -88,7 +83,6 @@ public class seikuken : MonoBehaviour {
 	void Refresh() {
 		rb.velocity = Vector3.zero;
 		busy = false;
-		timetext.text = Time.timeSinceLevelLoad.ToString();
 	}
 
 	Vector2 getvectomostnear()
@@ -106,7 +100,7 @@ public class seikuken : MonoBehaviour {
 	/*STATIC*/private Vector2 vectdirdash;
 	/*STATIC*/ private Vector2 destdash;
 
-	void dash(Vector2 vectm)
+	void dash(Vector2 vectm, Vector3 dir)
 	{
 		edashtype tmpdashtype = dashtype;
 		if (dashdisttraveled == 0)
@@ -115,7 +109,7 @@ public class seikuken : MonoBehaviour {
 				tmpdashtype = (edashtype)Random.Range((int)edashtype.fuite, (int)edashtype.randomaxewithouttrought);
 
 			if (tmpdashtype == edashtype.random)
-				vectdirdash = new Vector2(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f)).normalized;
+				vectdirdash = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
 			else if (tmpdashtype == edashtype.fuite)
 				 vectdirdash = -vectm;
 			else if (tmpdashtype == edashtype.throught)
@@ -124,8 +118,14 @@ public class seikuken : MonoBehaviour {
 				vectdirdash = vectm.Rotate(-90f);
 			else if (tmpdashtype == edashtype.right)
 				vectdirdash = vectm.Rotate(90f);
+			else if (tmpdashtype == edashtype.bcissapproved)
+				vectdirdash = dir;
 			vectdirdash = vectdirdash.normalized;
 			destdash = (Vector2)transform.position + vectdirdash * dashdist;
+			rb.detectCollisions = false;
+			Color tmp = Dodger.GetComponent<SpriteRenderer>().color;
+			tmp.a = 0.5f;
+			Dodger.GetComponent<SpriteRenderer>().color = tmp;
 		}
 
 		// the value of dashtime need to be greater than Time.deltaime (more than once)
@@ -136,6 +136,10 @@ public class seikuken : MonoBehaviour {
 		{
 			dashdisttraveled = 0;	
 			cdcurrent = cddash;
+			rb.detectCollisions = true;
+			Color tmp = Dodger.GetComponent<SpriteRenderer>().color;
+			tmp.a = 1f;
+			Dodger.GetComponent<SpriteRenderer>().color = tmp;
 		}
 	}
 
@@ -143,18 +147,21 @@ public class seikuken : MonoBehaviour {
 		return true;
 	}
 
+	void insiderefresh()
+	{
+		List<ParticleSystem> tmp = PlayerController.GetActiveParticleSystems();
+		inside = new List<ParticleSystem.Particle>();
+		List<ParticleSystem.Particle> inside2 = new List<ParticleSystem.Particle>();
+
+		foreach(ParticleSystem ps in tmp)
+			inside.AddRange(ps.GetComponent<TriggerDetector>().inside);
+	}
+
 	void Dodge() {
+		insiderefresh();
 		Vector3 dir = Vector3.zero;
 		if (inside != null) {
-			Vector2 vectmn = getvectomostnear();
-			if (dashdisttraveled != 0 || (candash == true && cdcurrent 	< 0 && vectmn.magnitude < dashdisttrigger))
-			{
-				Debug.Log("fdsf");
-				dash(vectmn);
-				return ;
-			}
 			for (int i = 0; i < inside.Count; i++) {
-				// Debug.Log((inside[i].position - transform.position).magnitude);
 				Vector3 delta = inside[i].position - transform.position;
 				Vector3 direction = -delta.normalized;
 				float directionForce = dodgePower / delta.magnitude;
@@ -180,32 +187,18 @@ public class seikuken : MonoBehaviour {
 		dir += (targety - transform.position) / 2f;
 		Debug.DrawRay(transform.position,dir, Color.green);
 		
+		Vector2 vectmn = getvectomostnear();
+		if (dashdisttraveled != 0 || (candash == true && cdcurrent 	< 0 && vectmn.magnitude < dashdisttrigger))
+		{
+			Debug.Log("fdsf");
+			dash(vectmn, dir);
+			return ;
+		}
 		if (dir != Vector3.zero){
 			dir = dir * speedPower;
 			rb.AddForce(Vector3.ClampMagnitude(dir, speedMax));
 		}
 	}
-
-	// void Dodge()
-	// {
-	// 	Vector3 dir = new Vector3(0, 0);
-
-	// 	if (inside != null) {
-	// 		// Debug.Log(candash);
-	// 		Debug.Log(vectmn.magnitude);
-	// 		// Debug.Log(cdcurrent);
-	// 		for (int i = 0; i < inside.Count; i++) {
-	// 			// Debug.Log(inside[i].position);
-	// 			dir += -(inside[i].position - transform.position).normalized * (1 - ((inside[i].position - transform.position).magnitude / 1.5f)); // prendre radius
-	// 		}
-	// 	}
-	// 	if (!inLimits) {
-	// 		dir += (Limits.transform.position - transform.position);
-	// 		// Debug.Log(Limits.transform.position - transform.position);
-	// 	}
-	// 	Debug.DrawRay(transform.position,dir, Color.green);
-	// 	rb.AddForce(dir * 100);
-	// }
 
 	Vector3 getDodgerPos() {
 		return (new Vector3(transform.position.x, transform.position.y + 0.3f, 0));
