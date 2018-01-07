@@ -38,8 +38,8 @@ public class ParticleSystemData
 	public ParticleEmissionShape	shape = ParticleEmissionShape.Cone;
 	public ParticleEmissionMode		mode = ParticleEmissionMode.Loop;
 
-	public Vector3	velocityOverLifetime = Vector3.zero;
-	public Vector3	forceOverLifetime = Vector3.zero;
+	public SerializableVector3	velocityOverLifetime = new SerializableVector3(0, 0, 0);
+	public SerializableVector3	forceOverLifetime = new SerializableVector3(0, 0, 0);
 
 	public float	radius = 1;
     public float	arc = 360;

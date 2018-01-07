@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: GUI
+    uniqueID: 71040993
+    locked: 0
+  - name: ParticlePreview
+    uniqueID: 4201984855
+    locked: 0
