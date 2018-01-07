@@ -16,10 +16,11 @@ public class PlayerController : MonoBehaviour
 
 	Dictionary< KeyCode, int > patternBindings = new Dictionary< KeyCode, int >()
 	{
-		{KeyCode.Alpha1, 0},
-		{KeyCode.Alpha2, 1},
-		{KeyCode.Alpha3, 2},
-		{KeyCode.Alpha4, 3},
+		{KeyCode.None, 0}, //default attack
+		{KeyCode.Alpha1, 1},
+		{KeyCode.Alpha2, 2},
+		{KeyCode.Alpha3, 3},
+		{KeyCode.Alpha4, 4},
 	};
 
 	void Awake()
@@ -38,6 +39,16 @@ public class PlayerController : MonoBehaviour
 	void Start ()
 	{
 		rigidbody = GetComponent< Rigidbody >();
+
+		//disable all particle system emissions
+		foreach (var kp in patterns)
+			foreach (var system in kp.particleSystems)
+			{
+				var emission = system.emission;
+				emission.enabled = false;
+			}
+		
+		ActivateSpellCard(0);
 	}
 	
 	void Update ()
@@ -45,22 +56,50 @@ public class PlayerController : MonoBehaviour
 		foreach (var kp in patternBindings)
 			if (Input.GetKeyDown(kp.Key))
 			{
-				int oldActivePattern = activePattern;
-				activePattern = kp.Value;
-
-				if (oldActivePattern != activePattern)
-				{
-					foreach (var particleSystem in patterns[oldActivePattern].particleSystems)
-						particleSystem.gameObject.SetActive(false);
-					foreach (var particleSystem in patterns[activePattern].particleSystems)
-						particleSystem.gameObject.SetActive(true);
-					GameGUIManager.ActivateSpellCard(activePattern, patterns[activePattern].cooldown, patterns[activePattern].duration);
-				}
+				if (GameGUIManager.IsSpellcardInCooldown(kp.Value - 1))
+					continue ;
+				
+				Debug.Log(kp.Value != activePattern);
+				if (kp.Value != activePattern)
+					ActivateSpellCard(kp.Value);
 			}
 		
 		Vector2 move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
 		rigidbody.velocity = move;
+	}
+
+	IEnumerator RestartDefaultPattern(float cooldown)
+	{
+		yield return new WaitForSeconds(cooldown);
+
+		ActivateSpellCard(0);
+	}
+
+	void ActivateSpellCard(int spellcardIndex)
+	{
+		int oldActivePattern = activePattern;
+
+		activePattern = spellcardIndex;
+
+		foreach (var particleSystem in patterns[oldActivePattern].particleSystems)
+		{
+			var emission = particleSystem.emission;
+			emission.enabled = false;
+		}
+
+		foreach (var particleSystem in patterns[activePattern].particleSystems)
+		{
+			var emission = particleSystem.emission;
+			emission.enabled = true;
+		}
+
+		if (spellcardIndex != 0)
+		{
+			Debug.Log("pattern: " + activePattern);
+			GameGUIManager.ActivateSpellCard(activePattern - 1, patterns[activePattern].cooldown, patterns[activePattern].duration);
+			StartCoroutine(RestartDefaultPattern(patterns[activePattern].cooldown));
+		}
 	}
 
 

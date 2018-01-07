@@ -471,7 +471,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -938159348
+  randomSeed: -1338846073
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2979,7 +2979,7 @@ ParticleSystem:
     inside: 2
     outside: 2
     enter: 2
-    exit: 0
+    exit: 2
     radiusScale: 1
   SubModule:
     serializedVersion: 2
@@ -3853,11 +3853,11 @@ MonoBehaviour:
   Dodger: {fileID: 114054521}
   Player: {fileID: 2048834245}
   dodgePower: 0.8
-  candash: 1
-  dashdist: 1.5
-  dashtime: 0.2
-  dashdisttrigger: 0.5
-  dashtype: 5
+  candash: 0
+  dashdist: 0.9
+  dashtime: 0.18
+  dashdisttrigger: 0.3
+  dashtype: 6
   cddash: 2
 --- !u!1 &2048834245
 GameObject:
@@ -3869,6 +3869,7 @@ GameObject:
   - component: {fileID: 2048834248}
   - component: {fileID: 2048834247}
   - component: {fileID: 2048834246}
+  - component: {fileID: 2048834249}
   m_Layer: 0
   m_Name: player
   m_TagString: Boss
@@ -3949,3 +3950,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2048834249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2048834245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d4fba98cff064356b4825dc560b90b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patterns:
+  - particleSystems:
+    - {fileID: 836990510}
+  activePattern: 0
