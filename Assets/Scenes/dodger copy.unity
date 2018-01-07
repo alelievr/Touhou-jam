@@ -3852,6 +3852,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Dodger: {fileID: 114054521}
   Player: {fileID: 2048834245}
+  HPbar: {fileID: 0}
+  score: {fileID: 0}
+  timeUi: {fileID: 0}
   dodgePower: 0.8
   candash: 1
   dashdist: 1.5
@@ -3859,6 +3862,12 @@ MonoBehaviour:
   dashdisttrigger: 0.5
   dashtype: 5
   cddash: 2
+  speedMax: 100
+  speedPower: 75
+  pts: 0
+  HPmax: 1000000
+  HP: 0
+  time: 0
 --- !u!1 &2048834245
 GameObject:
   m_ObjectHideFlags: 0

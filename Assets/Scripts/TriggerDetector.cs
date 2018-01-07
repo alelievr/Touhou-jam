@@ -8,6 +8,8 @@ public class TriggerDetector : MonoBehaviour {
 	ParticleSystem ps;
     public  seikuken  Boss;
 
+    private Color   startColor;
+
     // these lists are used to contain the particles which match
     // the trigger conditions each frame.
     [HideInInspector] public List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
@@ -17,6 +19,7 @@ public class TriggerDetector : MonoBehaviour {
     void OnEnable()
     {
         ps = GetComponent<ParticleSystem>();
+        startColor = ps.startColor;
     }
 
     void OnParticleTrigger()
@@ -44,7 +47,7 @@ public class TriggerDetector : MonoBehaviour {
         for (int i = 0; i < numExit; i++)
         {
             ParticleSystem.Particle p = exit[i];
-            p.startColor = new Color32(0, 255, 0, 255);
+            p.startColor = startColor;
             exit[i] = p;
         }
 

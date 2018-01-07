@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public static class Vector2Extension {
@@ -24,6 +25,8 @@ public class seikuken : MonoBehaviour {
 	public	GameObject	Player;
 
 	[Space]
+	// public Slider		HPbar;
+	[Space]
 	public float		dodgePower;
 
 	private	Rigidbody	rb;
@@ -43,14 +46,24 @@ public class seikuken : MonoBehaviour {
 	public	float		cddash = 5;
 	private float		cdcurrent = 0;
 
+	public	float		speedMax = 100;
+	public	float		speedPower = 75;
+	[Space]
+	private	Text		HPtext;
+	private	Text		timetext;
+	public	float		pts;
+	public	float		HPmax = 1000000f;
+	public	float		HP;
 
 	// Use this for initialization
 	void Start () {
 		rb = Dodger.GetComponent<Rigidbody>();
+		// HPtext = HPbar.GetComponent<Text>();
 		inLimits = true;
 		busy = false;
 		starty = transform.position.y;
 		cdcurrent = cddash;
+		HP = HPmax;
 		inside = new List<ParticleSystem.Particle>();
 	}
 	
@@ -166,12 +179,12 @@ public class seikuken : MonoBehaviour {
 		// reste en face du joueur et ne monte pas trop haut
 		Vector3 targetx = new Vector3(Player.transform.position.x, starty, 0);
 		Vector3 deltaX = targetx - transform.position;
-		Vector3 directionX = deltaX.normalized * Mathf.Clamp(Mathf.Exp(deltaX.magnitude / 3), 0, 1000);
+		Vector3 directionX = deltaX.normalized * Mathf.Clamp(Mathf.Pow(deltaX.magnitude, 2), 0, 1000);
 		Debug.DrawRay(transform.position, directionX, Color.red);
 		dir += directionX;
 
 		Vector3 targety = new Vector3(0, starty, 0);
-		dir += (targety - transform.position) / 1.5f;
+		dir += (targety - transform.position) / 2f;
 		Debug.DrawRay(transform.position,dir, Color.green);
 		
 		Vector2 vectmn = getvectomostnear();
@@ -182,8 +195,8 @@ public class seikuken : MonoBehaviour {
 			return ;
 		}
 		if (dir != Vector3.zero){
-			dir = dir * 75;
-			rb.AddForce(new Vector3(Mathf.Clamp(dir.x, -100	, 100	), Mathf.Clamp(dir.y, -100	, 100	), 0));
+			dir = dir * speedPower;
+			rb.AddForce(Vector3.ClampMagnitude(dir, speedMax));
 		}
 	}
 

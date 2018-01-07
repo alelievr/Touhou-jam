@@ -471,14 +471,14 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1338846073
+  randomSeed: 1522690085
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 30
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -519,7 +519,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -867,7 +867,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 20000
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -914,15 +914,15 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 5
     enabled: 1
-    type: 12
+    type: 4
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 1
+    radiusThickness: 0
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 11.91, y: 1, z: 1}
+    m_Scale: {x: 1, y: 1, z: 0}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -937,7 +937,7 @@ ParticleSystem:
     randomPositionAmount: 0
     radius:
       value: 1
-      mode: 0
+      mode: 2
       spread: 0
       speed:
         serializedVersion: 2
@@ -982,12 +982,12 @@ ParticleSystem:
           m_RotationOrder: 4
     arc:
       value: 360
-      mode: 0
+      mode: 2
       spread: 0
       speed:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 1
+        scalar: 5.81
         minScalar: 1
         maxCurve:
           serializedVersion: 2
@@ -1031,7 +1031,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 109.83
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1571,7 +1571,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 3.14
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1737,7 +1737,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
   ForceModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -1782,7 +1782,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3854,11 +3854,16 @@ MonoBehaviour:
   Player: {fileID: 2048834245}
   dodgePower: 0.8
   candash: 0
-  dashdist: 0.9
-  dashtime: 0.18
-  dashdisttrigger: 0.3
-  dashtype: 6
+  dashdist: 1.5
+  dashtime: 0.2
+  dashdisttrigger: 0.5
+  dashtype: 5
   cddash: 2
+  speedMax: 500
+  speedPower: 75
+  pts: 0
+  HPmax: 1000000
+  HP: 0
 --- !u!1 &2048834245
 GameObject:
   m_ObjectHideFlags: 0
