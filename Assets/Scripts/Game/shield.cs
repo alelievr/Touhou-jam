@@ -12,7 +12,7 @@ public class shield : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		rb.velocity += new Vector3(0, -0.05f, 0);
+		rb.velocity += new Vector3(0, 0.05f, 0);
 	}
 
 	void OnBecameInvisible()
