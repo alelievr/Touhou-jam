@@ -142,7 +142,7 @@ public class EditorToData : MonoBehaviour
 	}
 
 	public Slider S;	
-	public void	ResetrotateSlider()
+	public void	ResetSlider()
 	{
 		psd.zrotGameObject = 0;
 		S.value = 0;
@@ -162,11 +162,33 @@ public class EditorToData : MonoBehaviour
 	{
 		psd.zscale = zscale;
 	}
+	
+	public void	xforce(float xforce)
+	{
+		psd.xforce = xforce;
+	}
+
+	public void	yforce(float yforce)
+	{
+		psd.yforce = yforce;
+	}
+
+	public void	xvel(float xvel)
+	{
+		psd.xvel = xvel;
+	}
+
+	public void	yvel(float yvel)
+	{
+		psd.yvel = yvel;
+	}
 
 	public void	AngleSlider(float angle)
 	{
 		psd.angle = angle;
 	}
+
+	
 
 	public void	DonutRadiusSlider(float donutRadius)
 	{

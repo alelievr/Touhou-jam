@@ -17,17 +17,17 @@ public static class ParticleSystemScript
 	{
 		if (psd.mode == ParticleEmissionMode.Loop)
 		{
-			Debug.Log("loop");
+			// Debug.Log("loop");
 			return(ParticleSystemShapeMultiModeValue.Loop);
 		}
 		if (psd.mode == ParticleEmissionMode.PingPong)
 		{
-			Debug.Log("ping");
+			// Debug.Log("ping");
 			return(ParticleSystemShapeMultiModeValue.PingPong);
 	}
 		if (psd.mode == ParticleEmissionMode.BurstSpread)
 		{
-			Debug.Log("burst");
+			// Debug.Log("burst");
 			return(ParticleSystemShapeMultiModeValue.BurstSpread);
 		}
 		return(ParticleSystemShapeMultiModeValue.Random);
@@ -110,14 +110,14 @@ public static class ParticleSystemScript
 			
 		}
 		var FOL = ps.forceOverLifetime;
-		FOL.x = psd.forceOverLifetime.x;
-		FOL.y = psd.forceOverLifetime.y;
-		FOL.z = psd.forceOverLifetime.z;
+		FOL.enabled = true;
+		FOL.x = psd.xforce;
+		FOL.y = psd.yforce;
 		
 		var VOL = ps.velocityOverLifetime;
-		VOL.x = psd.velocityOverLifetime.x;
-		VOL.y = psd.velocityOverLifetime.y;
-		VOL.z = psd.velocityOverLifetime.z;
+		VOL.x = psd.xvel;
+		VOL.y = psd.yvel;
+
 		//ps.Play();
 	}
 
