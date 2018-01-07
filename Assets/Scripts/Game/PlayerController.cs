@@ -62,6 +62,8 @@ public class PlayerController : MonoBehaviour
 	
 	void Update ()
 	{
+		if (HP <= 0)
+			gm.Win(false);
 		HPSlider.value = -((HP / HPmax) * 100);
 		foreach (var kp in patternBindings)
 			if (Input.GetKeyDown(kp.Key))
@@ -113,14 +115,25 @@ public class PlayerController : MonoBehaviour
 	}
 	
 	void OnParticleCollision(GameObject other) {
-		Debug.Log("touchew");
-		if (HP <= 0)
-			gm.Win(false);
+		// Debug.Log("touchew");
+
 			
 		gm.AddPts(-12500);
 		if (HP < HPmax / 4)
 			HP -= 1000;
 		else
 			HP -= 4000;
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		Debug.Log(other.tag);		
+		if (other.CompareTag("Blank")){
+			gm.AddPts(-1000000);
+			if (HP < HPmax / 4)
+				HP -= 50000;
+			else
+				HP -= 100000;
+		}
 	}
 }

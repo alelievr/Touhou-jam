@@ -43,7 +43,7 @@ public class GM : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		pts = pts - 987;
+		pts = pts - 37987;
 	}
 
 	public	void AddPts(int i) {

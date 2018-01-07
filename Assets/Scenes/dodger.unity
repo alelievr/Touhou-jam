@@ -156,7 +156,8 @@ Prefab:
       propertyPath: m_Name
       value: Persos
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114553163031035488, guid: b6d76337e2f8145c484670f47b77d26e, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b6d76337e2f8145c484670f47b77d26e, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &193565075
