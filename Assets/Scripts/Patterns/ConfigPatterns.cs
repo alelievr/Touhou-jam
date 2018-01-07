@@ -118,6 +118,8 @@ public class ConfigPatterns : MonoBehaviour
 		foreach (var particleSystemData in currentPatternData.particlePatterns)
 			duration = Mathf.Max(duration, particleSystemData.startDelay + particleSystemData.duration);
 		
+		currentPatternData.duration = duration;
+		currentPatternData.cooldown = duration * 2;
 		Debug.Log("saving " + currentPatternData.name);
 
 		BinaryLoader.SavePatternData(currentPatternData, currentSpellcard, currentSave);
@@ -149,8 +151,6 @@ public class ConfigPatterns : MonoBehaviour
 		if (instance == null || instance.currentPatternData == null)
 			return null;
 		
-		Debug.Log("ist: " + instance.currentParticleSystem);
-		Debug.Log("ist: " + instance.currentPatternData.particlePatterns.Count);
 		return instance.currentPatternData.particlePatterns[instance.currentParticleSystem];
 	}
 }

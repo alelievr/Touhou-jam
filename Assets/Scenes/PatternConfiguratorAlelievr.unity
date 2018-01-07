@@ -3334,6 +3334,7 @@ MonoBehaviour:
   - {fileID: 428952536}
   - {fileID: 1089565506}
   - {fileID: 1494858454}
+  - {fileID: 457167021}
   previewParticleSystems:
   - {fileID: 36905507}
   - {fileID: 2135044920}
@@ -6050,6 +6051,11 @@ Prefab:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114676165095849412, guid: c945b5e0197e84d049fb2efca4fe824e,
+        type: 2}
+      propertyPath: m_Text
+      value: Spellcard 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c945b5e0197e84d049fb2efca4fe824e, type: 2}
   m_IsPrefabParent: 0
@@ -6058,6 +6064,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224881177148305028, guid: c945b5e0197e84d049fb2efca4fe824e,
     type: 2}
   m_PrefabInternal: {fileID: 457167019}
+--- !u!114 &457167021 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114676165095849412, guid: c945b5e0197e84d049fb2efca4fe824e,
+    type: 2}
+  m_PrefabInternal: {fileID: 457167019}
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &469239137
 GameObject:
   m_ObjectHideFlags: 0

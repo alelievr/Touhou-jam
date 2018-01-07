@@ -148,12 +148,7 @@ public class seikuken : MonoBehaviour {
 		List<ParticleSystem.Particle> inside2 = new List<ParticleSystem.Particle>();
 
 		foreach(ParticleSystem ps in tmp)
-		{
-			Debug.Log(ps);
-			foreach (var d in ps.GetComponent<TriggerDetector>().inside)
-				Debug.Log("d: " + d);
 			inside.AddRange(ps.GetComponent<TriggerDetector>().inside);
-		}
 	}
 
 	void Dodge() {
