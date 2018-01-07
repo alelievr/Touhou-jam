@@ -5,9 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class ParticleSystemDataEdge : ParticleSystemData
 {
-    public float	radius;
-    public float	arc;
+    public float	radius = 1;
+    public float	arc = 360;
 
-    public float	rotspeed;
-    public float	zrot;
+    public float	rotspeed = 1;
+    public float	zrot = 0;
 }

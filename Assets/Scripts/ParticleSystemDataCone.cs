@@ -7,14 +7,14 @@ public class ParticleSystemDataCone : ParticleSystemData
 {
     // Rot 90 x
     // scale 0 y
-    public float	radius;
-    public float	angle;
+    public float	radius = 1;
+    public float	angle = 20;
 
-    public float	arc;
+    public float	arc = 360;
 
-    public float	rotspeed;
-    public float	zrotGameObject;
+    public float	rotspeed = 1;
+    public float	zrotGameObject = 0;
 
-    public float	xscale;
-    public float	zscale;
+    public float	xscale = 0;
+    public float	zscale = 0;
 }

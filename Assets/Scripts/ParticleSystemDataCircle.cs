@@ -5,12 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public class ParticleSystemDataCircle : ParticleSystemData
 {
-    public float	radius;
-    public float	arc;
-    
-    public float	rotspeed;
+    public float	radius = 1;
+    public float	arc = 360;
 
-    public float	zrot;
-    public float	xscale;
-    public float	yscale;
+    public float	rotspeed = 1;
+
+    public float	zrot = 0;
+    public float	xscale = 0;
+    public float	yscale = 0;
 }
