@@ -5,17 +5,18 @@ using UnityEngine;
 public class shield : MonoBehaviour {
 
 	// Use this for initialization
+	private		Rigidbody	rb;
 	void Start () {
-		
+		rb = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void FixedUpdate () {
+		rb.velocity += new Vector3(0, -0.05f, 0);
 	}
 
-	void OnParticleCollision(GameObject other)
+	void OnBecameInvisible()
 	{
-		GameObject.Destroy(other);
+		GameObject.Destroy(gameObject);
 	}
 }

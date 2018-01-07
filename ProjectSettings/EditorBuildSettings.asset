@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PatternConfigurator.unity
     guid: d714313babb044d61af4ce3af891b3cf
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game.unity
     guid: 44448015a8ccf49d68bdd4fe6128d1e9
+  - enabled: 1
+    path: Assets/Scenes/PatternConfiguratorAlelievr.unity
+    guid: a6e485b57571742cfae4735b429dea99
+  - enabled: 1
+    path: Assets/Scenes/GameBciss.unity
+    guid: 71c2866a8155b47179d70efdc1720b58
