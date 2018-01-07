@@ -25,7 +25,7 @@ public class seikuken : MonoBehaviour {
 	public	GameObject	Player;
 
 	[Space]
-	// public Slider		HPbar;
+	public GM			gm;
 	[Space]
 	public float		dodgePower;
 
@@ -48,12 +48,7 @@ public class seikuken : MonoBehaviour {
 
 	public	float		speedMax = 100;
 	public	float		speedPower = 75;
-	[Space]
-	private	Text		HPtext;
-	private	Text		timetext;
-	public	float		pts;
-	public	float		HPmax = 1000000f;
-	public	float		HP;
+	
 
 	// Use this for initialization
 	void Start () {
@@ -63,7 +58,6 @@ public class seikuken : MonoBehaviour {
 		busy = false;
 		starty = transform.position.y;
 		cdcurrent = cddash;
-		HP = HPmax;
 		inside = new List<ParticleSystem.Particle>();
 	}
 	

@@ -24,36 +24,39 @@ public class TriggerDetector : MonoBehaviour {
 
     void OnParticleTrigger()
     {
-        // get the particles which matched the trigger conditions this frame
-        int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        int numInside = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, inside);
-        int numExit = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
-
-        for (int i = 0; i < numInside; i++)
+        if (!ps.CompareTag("Boss"))
         {
-            ParticleSystem.Particle p = inside[i];
-            // Debug.Log(inside[i].position);
-            inside[i] = p;
-        }
-        // iterate through the particles which entered the trigger and make them red
-        for (int i = 0; i < numEnter; i++)
-        {
-            ParticleSystem.Particle p = enter[i];
-            p.startColor = new Color32(255, 0, 0, 255);
-            enter[i] = p;
-        }
+            // get the particles which matched the trigger conditions this frame
+            int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
+            int numInside = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, inside);
+            int numExit = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
 
-        // iterate through the particles which exited the trigger and make them green
-        for (int i = 0; i < numExit; i++)
-        {
-            ParticleSystem.Particle p = exit[i];
-            p.startColor = startColor;
-            exit[i] = p;
-        }
+            for (int i = 0; i < numInside; i++)
+            {
+                ParticleSystem.Particle p = inside[i];
+                // Debug.Log(inside[i].position);
+                inside[i] = p;
+            }
+            // iterate through the particles which entered the trigger and make them red
+            for (int i = 0; i < numEnter; i++)
+            {
+                ParticleSystem.Particle p = enter[i];
+                p.startColor = new Color32(255, 0, 0, 255);
+                enter[i] = p;
+            }
 
-        // re-assign the modified particles back into the particle system
-        ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        ps.SetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
-        // Boss.inside = inside;
+            // iterate through the particles which exited the trigger and make them green
+            for (int i = 0; i < numExit; i++)
+            {
+                ParticleSystem.Particle p = exit[i];
+                p.startColor = startColor;
+                exit[i] = p;
+            }
+
+            // re-assign the modified particles back into the particle system
+            ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
+            ps.SetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
+            // Boss.inside = inside;
+        }
     }
 }

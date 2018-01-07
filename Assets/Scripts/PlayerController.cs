@@ -1,16 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
+	public GM 						gm;
 	public List< PlayerPattern >	patterns = new List< PlayerPattern >();
 
 	public static PlayerController 	instance;
 
 	[HideInInspector]
 	public int						activePattern = 0;
+
+	public Slider		HPbar;
+	private	Slider		HPSlider;
+	public	float		HPmax = 1000000f;
+	public	float		HP;
 
 	new Rigidbody		rigidbody;
 
@@ -39,6 +45,9 @@ public class PlayerController : MonoBehaviour
 	void Start ()
 	{
 		rigidbody = GetComponent< Rigidbody >();
+		HPSlider = HPbar.GetComponent<Slider>();
+
+		HP = HPmax;
 
 		//disable all particle system emissions
 		foreach (var kp in patterns)
@@ -53,6 +62,7 @@ public class PlayerController : MonoBehaviour
 	
 	void Update ()
 	{
+		HPSlider.value = -((HP / HPmax) * 100);
 		foreach (var kp in patternBindings)
 			if (Input.GetKeyDown(kp.Key))
 			{
@@ -101,6 +111,16 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(RestartDefaultPattern(patterns[activePattern].cooldown));
 		}
 	}
-
-
+	
+	void OnParticleCollision(GameObject other) {
+		Debug.Log("touchew");
+		if (HP <= 0)
+			gm.Win(false);
+			
+		gm.AddPts(-12500);
+		if (HP < HPmax / 4)
+			HP -= 1000;
+		else
+			HP -= 4000;
+	}
 }

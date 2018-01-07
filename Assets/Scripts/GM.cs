@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GM : MonoBehaviour {
 
@@ -13,15 +14,25 @@ public class GM : MonoBehaviour {
 	public	long		pts;
 	private	Text		scoretext;
 
-	// [Space]
-
+	[Space]
+	public	Text		Highscore;
+	public	long		Highpts;
+	private	Text		Highscoretext;
 
 	// Use this for initialization
 	void Start () {
 		timetext = timeUi.GetComponent<Text>();
 		scoretext = score.GetComponent<Text>();
-		Debug.Log(pts);
-
+		Highscoretext = Highscore.GetComponent<Text>();
+		// Debug.Log(PlayerPrefs.GetString("HighScore" + SceneManager.GetActiveScene().name));
+		if (PlayerPrefs.GetString("HighScore" + SceneManager.GetActiveScene().name) == "")
+		{
+			Highpts = 0;
+			PlayerPrefs.SetString("HighScore" + SceneManager.GetActiveScene().name, "0");
+		}
+		else 
+			Highpts = long.Parse(PlayerPrefs.GetString("HighScore" + SceneManager.GetActiveScene().name));
+		Highscoretext.text = Highpts.ToString();
 	}
 	
 	// Update is called once per frame
@@ -32,10 +43,14 @@ public class GM : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		pts = pts - 187;
+		pts = pts - 987;
 	}
 
 	public	void AddPts(int i) {
 		pts += i;
+	}
+	public	void Win(bool victory) {
+		if (long.Parse(PlayerPrefs.GetString("HighScore" + SceneManager.GetActiveScene().name)) < pts)
+			PlayerPrefs.SetString("HighScore" + SceneManager.GetActiveScene().name, pts.ToString());
 	}
 }
