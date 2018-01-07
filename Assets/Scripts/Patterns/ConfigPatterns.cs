@@ -35,7 +35,7 @@ public class ConfigPatterns : MonoBehaviour
 	int		currentSave = 0;
 	[System.NonSerialized]
 	int		currentSpellcard = 0;
-		[System.NonSerialized]
+	[System.NonSerialized]
 	int		currentParticleSystem = 0;
 
 	void Awake()

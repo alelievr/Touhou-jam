@@ -1,1 +1,6 @@
 Font: https://www.fontsquirrel.com/fonts/SF-Shai-Fontai?q%5Bterm%5D=japan&q%5Bsearch_check%5D=Y
+
+Musics:
+https://opengameart.org/content/thrust-sequence
+https://opengameart.org/content/space-dimensions-techno-version
+https://opengameart.org/content/neocrey-fractal

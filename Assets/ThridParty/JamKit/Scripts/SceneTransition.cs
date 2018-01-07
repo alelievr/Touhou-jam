@@ -14,50 +14,30 @@ public class SceneTransition : MonoBehaviour
 
 	public string	objectsToFadeTag = "FadeTranstion";
 
-	[HideInInspector]
-	public bool		destroyOnNextLoad = false;
-
-	public static SceneTransition instance;
-
 	bool			loading;
 	string			toLoad;
 
+	public static SceneTransition instance;
+
 	void Awake()
 	{
-		SceneManager.sceneLoaded += OnLoadCallback;
-
-		if (instance != null)
-		{
-			destroyOnNextLoad = true;
-			return ;
-		}
-
-		DontDestroyOnLoad(gameObject);
 		instance = this;
-	}
-
-	void OnDestroy()
-	{
-		SceneManager.sceneLoaded -= OnLoadCallback;
-	}
-
-	void OnLoadCallback(Scene scene, LoadSceneMode sceneMode)
-	{
-		if (destroyOnNextLoad)
-			Destroy(gameObject);
 	}
 
 	public void LoadScene(string name)
 	{
-		if (loading && !interuptLoading)
-			return ;
+		Debug.Log("Detail: " + name);
+		Debug.LogError("Detail: " + name);
+		SceneManager.LoadScene(name);
+		// if (loading && !interuptLoading)
+		// 	return ;
 		
-		if (interuptLoading)
-			StopCoroutine("LoadSceneCoroutine");
+		// if (interuptLoading)
+		// 	StopCoroutine("LoadSceneCoroutine");
 		
-		toLoad = name;
+		// toLoad = name;
 		
-		StartCoroutine("LoadSceneCoroutine");
+		// StartCoroutine("LoadSceneCoroutine");
 	}
 
 	void StartFadeIn()

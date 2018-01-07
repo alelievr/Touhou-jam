@@ -392,7 +392,7 @@ Prefab:
     - target: {fileID: 224937938560615072, guid: 177549619266240d79df6fc3404024c9,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: -34.54776
+      value: 255.88062
       objectReference: {fileID: 0}
     - target: {fileID: 224683428034301658, guid: 177549619266240d79df6fc3404024c9,
         type: 2}
@@ -412,7 +412,7 @@ Prefab:
     - target: {fileID: 224683428034301658, guid: 177549619266240d79df6fc3404024c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -56.62996
+      value: -66.78811
       objectReference: {fileID: 0}
     - target: {fileID: 224291459305315162, guid: 177549619266240d79df6fc3404024c9,
         type: 2}
@@ -432,7 +432,7 @@ Prefab:
     - target: {fileID: 224291459305315162, guid: 177549619266240d79df6fc3404024c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -119.88988
+      value: -150.36432
       objectReference: {fileID: 0}
     - target: {fileID: 224555554191781402, guid: 177549619266240d79df6fc3404024c9,
         type: 2}
@@ -452,7 +452,7 @@ Prefab:
     - target: {fileID: 224555554191781402, guid: 177549619266240d79df6fc3404024c9,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -183.1498
+      value: -233.94055
       objectReference: {fileID: 0}
     - target: {fileID: 114878378777641646, guid: 177549619266240d79df6fc3404024c9,
         type: 2}
@@ -503,6 +503,21 @@ Prefab:
         type: 2}
       propertyPath: m_EffectColor.b
       value: 0.8235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 114071717194962198, guid: 177549619266240d79df6fc3404024c9,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Touhou: Lost in Reversoria'
+      objectReference: {fileID: 0}
+    - target: {fileID: 224937938560615072, guid: 177549619266240d79df6fc3404024c9,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224937938560615072, guid: 177549619266240d79df6fc3404024c9,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -200.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 177549619266240d79df6fc3404024c9, type: 2}
@@ -777,7 +792,6 @@ MonoBehaviour:
   fadeTime: 0.5
   interuptLoading: 0
   objectsToFadeTag: FadeTranstion
-  destroyOnNextLoad: 0
 --- !u!4 &1094028194
 Transform:
   m_ObjectHideFlags: 0

@@ -352,7 +352,6 @@ MonoBehaviour:
   fadeTime: 0
   interuptLoading: 0
   objectsToFadeTag: FadeTranstion
-  destroyOnNextLoad: 0
 --- !u!4 &171241514
 Transform:
   m_ObjectHideFlags: 0
