@@ -104,8 +104,9 @@ public class PlayerController : MonoBehaviour
 			}
 		
 		Vector2 move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
+		
 		rigidbody.velocity = move;
+		transform.position = new Vector3(Mathf.Clamp(transform.position.x, -6f, 2f), Mathf.Clamp(transform.position.y, -1.5f, 4.8f), 0);
 	}
 
 	IEnumerator RestartDefaultPattern(float cooldown)
@@ -142,8 +143,6 @@ public class PlayerController : MonoBehaviour
 	}
 	
 	void OnParticleCollision(GameObject other) {
-		// Debug.Log("touchew");
-
 			
 		gm.AddPts(-12500);
 		if (HP < HPmax / 4)
