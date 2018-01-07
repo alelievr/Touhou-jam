@@ -44,7 +44,19 @@ public class PlayerController : MonoBehaviour
 	{
 		foreach (var kp in patternBindings)
 			if (Input.GetKeyDown(kp.Key))
+			{
+				int oldActivePattern = activePattern;
 				activePattern = kp.Value;
+
+				if (oldActivePattern != activePattern)
+				{
+					foreach (var particleSystem in patterns[oldActivePattern].particleSystems)
+						particleSystem.gameObject.SetActive(false);
+					foreach (var particleSystem in patterns[activePattern].particleSystems)
+						particleSystem.gameObject.SetActive(true);
+					GameGUIManager.ActivateSpellCard(activePattern, patterns[activePattern].cooldown, patterns[activePattern].duration);
+				}
+			}
 		
 		Vector2 move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 

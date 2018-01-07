@@ -3851,7 +3851,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Dodger: {fileID: 114054521}
-  Limits: {fileID: 259638713}
+  Player: {fileID: 0}
+  dodgePower: 0
   candash: 1
   dashdist: 2.5
   dashtime: 0.1
