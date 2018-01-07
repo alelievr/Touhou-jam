@@ -224,8 +224,6 @@ public class dreamloLeaderBoard : MonoBehaviour {
 		return scoreList;
 	}
 	
-	
-	
 	// Keep pipe and slash out of names
 	
 	string Clean(string s)

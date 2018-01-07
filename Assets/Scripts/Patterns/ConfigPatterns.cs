@@ -18,38 +18,54 @@ public class ConfigPatterns : MonoBehaviour
 	public Sprite			greyButtonSprite;
 	public Image[]			saveButtons;
 
+	[Space]
+	public GameObject		configParticleSystemPanel;
+	[HideInInspector]
+	public GameObject		configPatternPanel;
+
+	[Space]
+	public Image[]			spellcardImages;
+
 	[HideInInspector]
 	public PatternData		currentPatternData;
 
 	public static ConfigPatterns	instance;
 
+	[System.NonSerialized]
 	int		currentSave = 0;
+	[System.NonSerialized]
 	int		currentSpellcard = 0;
+		[System.NonSerialized]
 	int		currentParticleSystem = 0;
 
 	void Awake()
 	{
 		instance = this;
+		configPatternPanel = gameObject;
 	}
 
 	void Start()
 	{
+		LoadSave(Global.GetCurrentSaveIndex());
 		UpdatePatternData();
 	}
 
 	public void LoadSpellcard(int index)
 	{
+		spellcardImages[currentSpellcard].sprite = greyButtonSprite;
 		currentSpellcard = index;
+		spellcardImages[currentSpellcard].sprite = greenButtonSprite;
 		UpdatePatternData();
 	}
 
 	public void LoadSave(int index)
 	{
-		SaveCurrentPattern();
 		saveButtons[currentSave].sprite = greyButtonSprite;
 		currentSave = index;
 		saveButtons[currentSave].sprite = greenButtonSprite;
 		UpdatePatternData();
+		
+		Global.SetCurrenSaveIndex(index);
 	}
 
 	void UpdatePatternData()
@@ -69,7 +85,7 @@ public class ConfigPatterns : MonoBehaviour
 
 			if (i < currentPatternData.particlePatterns.Count)
 			{
-				//TODO: update particle systems
+				ParticleSystemScript.SetPSFromData(previewParticleSystems[i], currentPatternData.particlePatterns[i]);
 				emission.enabled = true;
 			}
 			else
@@ -82,6 +98,13 @@ public class ConfigPatterns : MonoBehaviour
 	public void ConfigureParticleSystem(int index)
 	{
 		currentParticleSystem = index;
+		if (index >= currentPatternData.particlePatterns.Count)
+		{
+			currentPatternData.particlePatterns.Add(new ParticleSystemData());
+		}
+
+		configPatternPanel.SetActive(false);
+		configParticleSystemPanel.SetActive(true);
 	}
 
 	public void SaveCurrentPattern()
@@ -89,7 +112,17 @@ public class ConfigPatterns : MonoBehaviour
 		if (currentPatternData == null)
 			return ;
 
+		float duration = 0;
+
+		//compute the duration of the parttern:
+		foreach (var particleSystemData in currentPatternData.particlePatterns)
+			duration = Mathf.Max(duration, particleSystemData.startDelay + particleSystemData.duration);
+		
+		Debug.Log("saving " + currentPatternData.name);
+
 		BinaryLoader.SavePatternData(currentPatternData, currentSpellcard, currentSave);
+
+		UpdatePatternData();
 	}
 
 	void Update()
@@ -116,6 +149,8 @@ public class ConfigPatterns : MonoBehaviour
 		if (instance == null || instance.currentPatternData == null)
 			return null;
 		
+		Debug.Log("ist: " + instance.currentParticleSystem);
+		Debug.Log("ist: " + instance.currentPatternData.particlePatterns.Count);
 		return instance.currentPatternData.particlePatterns[instance.currentParticleSystem];
 	}
 }

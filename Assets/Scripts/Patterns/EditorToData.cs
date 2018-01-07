@@ -35,10 +35,12 @@ public class EditorToData : MonoBehaviour
 	float	oldfirerate = 20f;
 
 	ParticleSystemData psd;
+
 	public GameObject	psh;
-	void Start()
+
+	void OnEnable()
 	{
-		psd = new ParticleSystemData();
+		psd = ConfigPatterns.GetCurrentParticleSystemData();
 	}
 
 	public void	SpeedSlider(float speed)
@@ -142,7 +144,7 @@ public class EditorToData : MonoBehaviour
 	}
 
 	public Slider S;	
-	public void	ResetrotateSlider()
+	public void	ResetSlider()
 	{
 		psd.zrotGameObject = 0;
 		S.value = 0;
@@ -162,11 +164,33 @@ public class EditorToData : MonoBehaviour
 	{
 		psd.zscale = zscale;
 	}
+	
+	public void	xforce(float xforce)
+	{
+		psd.xforce = xforce;
+	}
+
+	public void	yforce(float yforce)
+	{
+		psd.yforce = yforce;
+	}
+
+	public void	xvel(float xvel)
+	{
+		psd.xvel = xvel;
+	}
+
+	public void	yvel(float yvel)
+	{
+		psd.yvel = yvel;
+	}
 
 	public void	AngleSlider(float angle)
 	{
 		psd.angle = angle;
 	}
+
+	
 
 	public void	DonutRadiusSlider(float donutRadius)
 	{
@@ -174,6 +198,9 @@ public class EditorToData : MonoBehaviour
 	}
 	// Update is called once per frame
 	void Update () {
+		if (psd == null || !gameObject.activeSelf)
+			return ;
+		
 		// if (psd.isBurst == true)
 		// 	psd.rate = 0;
 		ParticleSystemScript.SetPSHromData(psh, psd);

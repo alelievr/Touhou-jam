@@ -88,10 +88,23 @@ public static class BinaryLoader
 	{
 		return patternFolder + "s" + saveIndex + "-p" + patternIndex + patternExtension;
 	}
+	
+	static string GetDefaultPatternDataPath(int patternIndex, int saveIndex)
+	{
+		return Application.streamingAssetsPath + "/Patterns/" + "s" + saveIndex + "-p" + patternIndex + patternExtension;
+	}
 
 	public static PatternData LoadPatternData(int patternIndex, int saveIndex)
 	{
-		return Deserialize< PatternData >(GetPatternDataPath(patternIndex, saveIndex));
+		PatternData pattern = Deserialize< PatternData >(GetPatternDataPath(patternIndex, saveIndex));
+
+		if (pattern != null)
+			return pattern;
+		
+		if (saveIndex != 0)
+			return null;
+		
+		return Deserialize< PatternData >(GetDefaultPatternDataPath(patternIndex, saveIndex));
 	}
 
 	public static string SavePatternData(PatternData pattern, int patternIndex, int saveIndex)

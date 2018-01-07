@@ -26,7 +26,6 @@ public class ParticleSystemData
 	public float	lifetime = 10;
 	public float	speed = 1;
 	public float	size = 0.1f;
-	public Color	color;
 
 	public bool		isBurst = false;
 	public float	rate = 20;
@@ -38,8 +37,10 @@ public class ParticleSystemData
 	public ParticleEmissionShape	shape = ParticleEmissionShape.Cone;
 	public ParticleEmissionMode		mode = ParticleEmissionMode.Loop;
 
-	public SerializableVector3	velocityOverLifetime = new SerializableVector3(0, 0, 0);
-	public SerializableVector3	forceOverLifetime = new SerializableVector3(0, 0, 0);
+	public float 	xvel = 0f;
+	public float 	yvel = 0f;
+	public float 	xforce = 0f;
+	public float 	yforce = 0f;
 
 	public float	radius = 1;
     public float	arc = 360;
