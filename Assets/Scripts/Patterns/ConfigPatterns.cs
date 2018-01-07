@@ -18,6 +18,11 @@ public class ConfigPatterns : MonoBehaviour
 	public Sprite			greyButtonSprite;
 	public Image[]			saveButtons;
 
+	[Space]
+	public GameObject		configParticleSystemPanel;
+	[HideInInspector]
+	public GameObject		configPatternPanel;
+
 	[HideInInspector]
 	public PatternData		currentPatternData;
 
@@ -30,10 +35,12 @@ public class ConfigPatterns : MonoBehaviour
 	void Awake()
 	{
 		instance = this;
+		configPatternPanel = gameObject;
 	}
 
 	void Start()
 	{
+		LoadSave(Global.GetCurrentSaveIndex());
 		UpdatePatternData();
 	}
 
@@ -50,6 +57,8 @@ public class ConfigPatterns : MonoBehaviour
 		currentSave = index;
 		saveButtons[currentSave].sprite = greenButtonSprite;
 		UpdatePatternData();
+		
+		Global.SetCurrenSaveIndex(index);
 	}
 
 	void UpdatePatternData()
@@ -69,7 +78,7 @@ public class ConfigPatterns : MonoBehaviour
 
 			if (i < currentPatternData.particlePatterns.Count)
 			{
-				//TODO: update particle systems
+				ParticleSystemScript.SetPSFromData(previewParticleSystems[i], currentPatternData.particlePatterns[i]);
 				emission.enabled = true;
 			}
 			else
@@ -82,6 +91,13 @@ public class ConfigPatterns : MonoBehaviour
 	public void ConfigureParticleSystem(int index)
 	{
 		currentParticleSystem = index;
+		if (index >= currentPatternData.particlePatterns.Count)
+		{
+			currentPatternData.particlePatterns.Add(new ParticleSystemData());
+		}
+
+		configPatternPanel.SetActive(false);
+		configParticleSystemPanel.SetActive(true);
 	}
 
 	public void SaveCurrentPattern()
@@ -116,6 +132,8 @@ public class ConfigPatterns : MonoBehaviour
 		if (instance == null || instance.currentPatternData == null)
 			return null;
 		
+		Debug.Log("ist: " + instance.currentParticleSystem);
+		Debug.Log("ist: " + instance.currentPatternData.particlePatterns.Count);
 		return instance.currentPatternData.particlePatterns[instance.currentParticleSystem];
 	}
 }

@@ -3045,7 +3045,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2067147356}
   m_Direction: 2
   m_Value: 0.99999976
-  m_Size: 0.5382246
+  m_Size: 0.4177975
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3364,7 +3364,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1462388427}
   - component: {fileID: 1462388426}
-  - component: {fileID: 1462388428}
   - component: {fileID: 1462388425}
   m_Layer: 0
   m_Name: particle test
@@ -3487,7 +3486,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1263483366
+  randomSeed: 652124720
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6825,17 +6824,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1462388428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1462388424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a325bb67c852f4894b9d617a96c53974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1474662235
 Prefab:
   m_ObjectHideFlags: 0
@@ -7734,17 +7722,17 @@ Prefab:
     - target: {fileID: 224749121284035338, guid: e154dc4eda8124eae951b1b122dde96b,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0.5013889
       objectReference: {fileID: 0}
     - target: {fileID: 224205212504920412, guid: e154dc4eda8124eae951b1b122dde96b,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0.5013889
       objectReference: {fileID: 0}
     - target: {fileID: 224205212504920412, guid: e154dc4eda8124eae951b1b122dde96b,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0.5013889
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e154dc4eda8124eae951b1b122dde96b, type: 2}

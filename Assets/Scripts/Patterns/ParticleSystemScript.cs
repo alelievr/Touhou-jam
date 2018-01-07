@@ -127,12 +127,13 @@ public static class ParticleSystemScript
 		SetPSFromData(ps, psd);
 	}
 
-	static public PlayerPattern GetPSListFromDataList(PatternData pd)
+	static public PlayerPattern GetPSListFromDataList(PatternData pd, Transform parent)
 	{
 		PlayerPattern playerPattern = new PlayerPattern();
 		foreach (ParticleSystemData psd in pd.particlePatterns)
 		{
 			GameObject psh = new GameObject();
+			psh.transform.SetParent(parent);
 			ParticleSystem tmpps = psh.AddComponent<ParticleSystem>();
 			SetPSHromData(psh, psd);
 			playerPattern.particleSystems.Add(tmpps);

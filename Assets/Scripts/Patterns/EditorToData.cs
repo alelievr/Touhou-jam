@@ -35,10 +35,12 @@ public class EditorToData : MonoBehaviour
 	float	oldfirerate = 20f;
 
 	ParticleSystemData psd;
+
 	public GameObject	psh;
-	void Start()
+
+	void OnEnable()
 	{
-		psd = new ParticleSystemData();
+		psd = ConfigPatterns.GetCurrentParticleSystemData();
 	}
 
 	public void	SpeedSlider(float speed)
@@ -174,6 +176,9 @@ public class EditorToData : MonoBehaviour
 	}
 	// Update is called once per frame
 	void Update () {
+		if (psd == null || !gameObject.activeSelf)
+			return ;
+		
 		// if (psd.isBurst == true)
 		// 	psd.rate = 0;
 		ParticleSystemScript.SetPSHromData(psh, psd);

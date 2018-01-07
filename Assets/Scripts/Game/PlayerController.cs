@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 	public GM 						gm;
+	[HideInInspector]
 	public List< PlayerPattern >	patterns = new List< PlayerPattern >();
 
 	public static PlayerController 	instance;
@@ -48,6 +49,24 @@ public class PlayerController : MonoBehaviour
 		HPSlider = HPbar.GetComponent<Slider>();
 
 		HP = HPmax;
+
+		//Load the spellcards using the current save number;
+
+		int saveIndex = Global.GetCurrentSaveIndex();
+
+		patterns.Clear();
+
+		for (int i = 0; i < 4; i++)
+		{
+			PatternData data = BinaryLoader.LoadPatternData(i, saveIndex);
+
+			if (data != null)
+			{
+				var pattern = ParticleSystemScript.GetPSListFromDataList(data, transform);
+
+				patterns.Add(pattern);
+			}
+		}
 
 		//disable all particle system emissions
 		foreach (var kp in patterns)

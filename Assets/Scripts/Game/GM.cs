@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GM : MonoBehaviour {
+public class GM : MonoBehaviour
+{
 
 	public Text			timeUi;
 	private	Text		timetext;
