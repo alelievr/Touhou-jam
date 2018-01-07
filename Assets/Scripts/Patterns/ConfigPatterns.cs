@@ -111,6 +111,12 @@ public class ConfigPatterns : MonoBehaviour
 	{
 		if (currentPatternData == null)
 			return ;
+
+		float duration = 0;
+
+		//compute the duration of the parttern:
+		foreach (var particleSystemData in currentPatternData.particlePatterns)
+			duration = Mathf.Max(duration, particleSystemData.startDelay + particleSystemData.duration);
 		
 		Debug.Log("saving " + currentPatternData.name);
 

@@ -9,7 +9,7 @@ public class LeaderBoardCell : MonoBehaviour
 	public Text		pointText;
 	public Text		nameText;
 
-	public void UpdateProperties(int points, int maxPoints, string name)
+	public void UpdateProperties(long points, int maxPoints, string name)
 	{
 		fillImage.fillAmount = (float)points / (float)maxPoints;
 
