@@ -129,12 +129,13 @@ public static class ParticleSystemScript
 
 	static public PlayerPattern GetPSListFromDataList(PatternData pd, Transform parent)
 	{
+		GameObject prefab = Resources.Load< GameObject >("defaultParticleSsytem");
+
 		PlayerPattern playerPattern = new PlayerPattern();
 		foreach (ParticleSystemData psd in pd.particlePatterns)
 		{
-			GameObject psh = new GameObject();
-			psh.transform.SetParent(parent);
-			ParticleSystem tmpps = psh.AddComponent<ParticleSystem>();
+			GameObject psh = GameObject.Instantiate(prefab, parent.position, parent.rotation, parent);
+			ParticleSystem tmpps = psh.GetComponent<ParticleSystem>();
 			SetPSHromData(psh, psd);
 			playerPattern.particleSystems.Add(tmpps);
 		}

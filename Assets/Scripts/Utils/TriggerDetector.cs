@@ -19,6 +19,8 @@ public class TriggerDetector : MonoBehaviour {
     void OnEnable()
     {
         ps = GetComponent<ParticleSystem>();
+        Boss = FindObjectOfType< seikuken >();
+        ps.trigger.SetCollider(0, Boss);
         startColor = ps.startColor;
     }
 
