@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine; 
+using UnityEngine.UI; 
+
 
 public static class ParticleSystemScript
 {
@@ -34,14 +36,26 @@ public static class ParticleSystemScript
 	}
 
 	static public bool	setconestartrot = false;
+	public static bool playeditorparticle = true;
 
 	public static void SetPSFromData(ParticleSystem ps, ParticleSystemData psd)
-	{
-
-		//ps.Stop();
+	{	
 		var main = ps.main;
+		// ps.Stop();
+		// main.duration = psd.duration;
+		if (playeditorparticle == true)
+		{
+			ps.Stop();
+			main.duration = psd.duration;
+			ps.Play();
+			playeditorparticle = false;
+		}
+		//ps.Stop();
+		main.maxParticles = 20000;
+		main.simulationSpace = ParticleSystemSimulationSpace.World;
 		main.startDelay = psd.startDelay;
-	//	main.duration = psd.duration;
+		main.loop = false;
+		// main.duration = psd.duration;
 		main.startLifetime = psd.lifetime;
 		main.startSpeed = psd.speed;
 		main.startSize = psd.size;

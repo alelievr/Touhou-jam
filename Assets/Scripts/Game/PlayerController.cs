@@ -64,6 +64,14 @@ public class PlayerController : MonoBehaviour
 			{
 				var pattern = ParticleSystemScript.GetPSListFromDataList(data, transform);
 
+				//set loop to true for auto attack
+				if (i == 0)
+					foreach (var ps in pattern.particleSystems)
+					{
+						var main = ps.main;
+						main.loop = true;
+					}
+
 				patterns.Add(pattern);
 			}
 		}

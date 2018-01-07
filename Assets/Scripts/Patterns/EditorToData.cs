@@ -43,6 +43,21 @@ public class EditorToData : MonoBehaviour
 		psd = ConfigPatterns.GetCurrentParticleSystemData();
 	}
 
+	public void Replay()
+	{
+		ParticleSystemScript.playeditorparticle = true;
+	}
+
+	public void DelaySlider(float delay)
+	{
+		psd.startDelay = delay;
+	}
+
+	public void DurationSlider(float duration)
+	{
+		psd.duration = duration;
+	}
+
 	public void	SpeedSlider(float speed)
 	{
 		psd.speed = speed;
