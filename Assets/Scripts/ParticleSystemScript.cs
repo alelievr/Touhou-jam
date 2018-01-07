@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine; 
 
-public class ParticleSystemScript : MonoBehaviour 
+public static class ParticleSystemScript
 {
-	ParticleSystem ps;
+	static ParticleSystem ps;
 
 	// ParticleSystemDataCircle psdci { get { return psd as ParticleSystemDataCircle; } }
 	// ParticleSystemDataCone psdco { get { return psd as ParticleSystemDataCone; } }
@@ -13,24 +13,31 @@ public class ParticleSystemScript : MonoBehaviour
 
 	// Use this for initialization
 
-	ParticleSystemShapeMultiModeValue		SetPSShape(ParticleSystemData psd)
+	static ParticleSystemShapeMultiModeValue		SetPSShape(ParticleSystemData psd)
 	{
 		if (psd.mode == ParticleEmissionMode.Loop)
+		{
+			Debug.Log("loop");
 			return(ParticleSystemShapeMultiModeValue.Loop);
+		}
 		if (psd.mode == ParticleEmissionMode.PingPong)
+		{
+			Debug.Log("ping");
 			return(ParticleSystemShapeMultiModeValue.PingPong);
+	}
 		if (psd.mode == ParticleEmissionMode.BurstSpread)
+		{
+			Debug.Log("burst");
 			return(ParticleSystemShapeMultiModeValue.BurstSpread);
+		}
 		return(ParticleSystemShapeMultiModeValue.Random);
 	}
 
-	bool	setconestartrot = false;
+	static public bool	setconestartrot = false;
 
-	public	void	SetPSFromData(GameObject psHolder, ParticleSystemData psd)
+	public static void SetPSFromData(ParticleSystem ps, ParticleSystemData psd)
 	{
-		if (psd == null)
-			Debug.Log(null);
-		ps = psHolder.GetComponent<ParticleSystem>();
+
 		//ps.Stop();
 		var main = ps.main;
 		main.startDelay = psd.startDelay;
@@ -47,6 +54,7 @@ public class ParticleSystemScript : MonoBehaviour
 		}
 		else
 		{
+			em.SetBursts(new ParticleSystem.Burst[] { new ParticleSystem.Burst(0, 0, 0) });
 			em.rateOverTime= psd.rate;
 		}
 
@@ -61,14 +69,10 @@ public class ParticleSystemScript : MonoBehaviour
 			sh.arcSpeed = psd.rotspeed;
 			sh.rotation = new Vector3(90f, 0, 0);
 			sh.scale = new Vector3(psd.xscale, 0, psd.zscale);
-			if (setconestartrot == false)
-			{
-				setconestartrot = true;
-				psHolder.transform.Rotate(0, 0, psd.zrot);
-			}
-			psHolder.transform.Rotate(0, 0, psd.zrotGameObject);
+			ps.transform.eulerAngles =  new Vector3(0, 0, psd.zrot);
+			ps.transform.Rotate(0, 0, psd.zrotGameObject);
 		}
-		if (psd.shape == ParticleEmissionShape.Donut)
+		else if (psd.shape == ParticleEmissionShape.Donut)
 		{
 			sh.shapeType = ParticleSystemShapeType.Donut;
 			sh.arcMode = SetPSShape(psd);
@@ -78,20 +82,22 @@ public class ParticleSystemScript : MonoBehaviour
 			sh.arcSpeed = psd.rotspeed;
 			sh.rotation = new Vector3(0, 0, psd.zrot);
 			sh.scale = new Vector3(psd.xscale, psd.yscale, 0);
-			psHolder.transform.Rotate(0, 0, psd.zrotGameObject);
+			ps.transform.Rotate(0, 0, psd.zrotGameObject);
 			
 		}
-		if (psd.shape == ParticleEmissionShape.Edge)
+		else if (psd.shape == ParticleEmissionShape.Edge)
 		{
+			Debug.Log("Edge");
 			sh.shapeType = ParticleSystemShapeType.SingleSidedEdge;
 			sh.arcMode = SetPSShape(psd);
 			sh.radius = psd.radius;
 			sh.arc = psd.arc;
 			sh.arcSpeed = psd.rotspeed;
 			sh.rotation = new Vector3(0, 0, psd.zrot);
-			psHolder.transform.Rotate(0, 0, psd.zrotGameObject);
+			sh.scale = new Vector3(1, 1, 1);
+			ps.transform.Rotate(0, 0, psd.zrotGameObject);
 		}
-		if (psd.shape == ParticleEmissionShape.Circle)
+		else if (psd.shape == ParticleEmissionShape.Circle)
 		{
 			sh.shapeType = ParticleSystemShapeType.Circle;
 			sh.arcMode = SetPSShape(psd);
@@ -100,7 +106,7 @@ public class ParticleSystemScript : MonoBehaviour
 			sh.arcSpeed = psd.rotspeed;
 			sh.rotation = new Vector3(0, 0, psd.zrot);
 			sh.scale = new Vector3(psd.xscale, psd.yscale, 0);
-			psHolder.transform.Rotate(0, 0, psd.zrotGameObject);
+			ps.transform.Rotate(0, 0, psd.zrotGameObject);
 			
 		}
 		var FOL = ps.forceOverLifetime;
@@ -115,14 +121,20 @@ public class ParticleSystemScript : MonoBehaviour
 		//ps.Play();
 	}
 
-	public PlayerPattern GetPSListFromDataList(PatternData pd)
+	static public	void	SetPSHromData(GameObject psHolder, ParticleSystemData psd)
+	{
+		ps = psHolder.GetComponent<ParticleSystem>();
+		SetPSFromData(ps, psd);
+	}
+
+	static public PlayerPattern GetPSListFromDataList(PatternData pd)
 	{
 		PlayerPattern playerPattern = new PlayerPattern();
 		foreach (ParticleSystemData psd in pd.particlePatterns)
 		{
 			GameObject psh = new GameObject();
 			ParticleSystem tmpps = psh.AddComponent<ParticleSystem>();
-			SetPSFromData(psh, psd);
+			SetPSHromData(psh, psd);
 			playerPattern.particleSystems.Add(tmpps);
 		}
 
