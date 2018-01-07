@@ -26,7 +26,6 @@ public class ParticleSystemData
 	public float	lifetime = 10;
 	public float	speed = 1;
 	public float	size = 0.1f;
-	public Color	color;
 
 	public bool		isBurst = false;
 	public float	rate = 20;

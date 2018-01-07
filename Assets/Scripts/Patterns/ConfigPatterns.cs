@@ -28,8 +28,11 @@ public class ConfigPatterns : MonoBehaviour
 
 	public static ConfigPatterns	instance;
 
+	[System.NonSerialized]
 	int		currentSave = 0;
+	[System.NonSerialized]
 	int		currentSpellcard = 0;
+		[System.NonSerialized]
 	int		currentParticleSystem = 0;
 
 	void Awake()
@@ -52,7 +55,6 @@ public class ConfigPatterns : MonoBehaviour
 
 	public void LoadSave(int index)
 	{
-		SaveCurrentPattern();
 		saveButtons[currentSave].sprite = greyButtonSprite;
 		currentSave = index;
 		saveButtons[currentSave].sprite = greenButtonSprite;
@@ -104,8 +106,12 @@ public class ConfigPatterns : MonoBehaviour
 	{
 		if (currentPatternData == null)
 			return ;
+		
+		Debug.Log("saving " + currentPatternData.name);
 
 		BinaryLoader.SavePatternData(currentPatternData, currentSpellcard, currentSave);
+
+		UpdatePatternData();
 	}
 
 	void Update()
