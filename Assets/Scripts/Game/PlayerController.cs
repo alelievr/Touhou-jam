@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
 		patterns.Clear();
 
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			PatternData data = BinaryLoader.LoadPatternData(i, saveIndex);
 

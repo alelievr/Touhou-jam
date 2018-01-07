@@ -23,6 +23,9 @@ public class ConfigPatterns : MonoBehaviour
 	[HideInInspector]
 	public GameObject		configPatternPanel;
 
+	[Space]
+	public Image[]			spellcardImages;
+
 	[HideInInspector]
 	public PatternData		currentPatternData;
 
@@ -49,7 +52,9 @@ public class ConfigPatterns : MonoBehaviour
 
 	public void LoadSpellcard(int index)
 	{
+		spellcardImages[currentSpellcard].sprite = greyButtonSprite;
 		currentSpellcard = index;
+		spellcardImages[currentSpellcard].sprite = greenButtonSprite;
 		UpdatePatternData();
 	}
 
