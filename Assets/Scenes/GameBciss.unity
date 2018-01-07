@@ -4438,7 +4438,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -772225233
+  randomSeed: -2079448370
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -11789,7 +11789,7 @@ Prefab:
     - target: {fileID: 224835783690592052, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -78.2
       objectReference: {fileID: 0}
     - target: {fileID: 224835783690592052, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
@@ -11799,7 +11799,7 @@ Prefab:
     - target: {fileID: 224835783690592052, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 146.4
       objectReference: {fileID: 0}
     - target: {fileID: 224911238539271762, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
@@ -11819,7 +11819,7 @@ Prefab:
     - target: {fileID: 224911238539271762, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -78.2
       objectReference: {fileID: 0}
     - target: {fileID: 224911238539271762, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
@@ -11829,7 +11829,7 @@ Prefab:
     - target: {fileID: 224911238539271762, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 146.4
       objectReference: {fileID: 0}
     - target: {fileID: 224392808144936538, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
@@ -11849,7 +11849,7 @@ Prefab:
     - target: {fileID: 224392808144936538, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -78.2
       objectReference: {fileID: 0}
     - target: {fileID: 224392808144936538, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
@@ -11859,7 +11859,7 @@ Prefab:
     - target: {fileID: 224392808144936538, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 146.4
       objectReference: {fileID: 0}
     - target: {fileID: 224422984092612900, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
@@ -11879,7 +11879,7 @@ Prefab:
     - target: {fileID: 224422984092612900, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -78.2
       objectReference: {fileID: 0}
     - target: {fileID: 224422984092612900, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
@@ -11889,7 +11889,7 @@ Prefab:
     - target: {fileID: 224422984092612900, guid: 36bbea434b1d547e48ec1f7cca892582,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 146.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 36bbea434b1d547e48ec1f7cca892582, type: 2}
@@ -16676,7 +16676,6 @@ GameObject:
   - component: {fileID: 1874538492}
   - component: {fileID: 1874538491}
   - component: {fileID: 1874538490}
-  - component: {fileID: 1874538489}
   - component: {fileID: 1874538493}
   m_Layer: 8
   m_Name: dodger
@@ -16685,18 +16684,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1874538489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114553163031035488, guid: b6d76337e2f8145c484670f47b77d26e,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1874538488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6a96887d428243609ac55ce3e4ecacb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &1874538490
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16783,9 +16770,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f6a85af5d1c4475295aeb02cace52db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Shield_right: 1
+  Shield_right: 0
   shield_right: {fileID: 1379232318}
-  Shield_left: 1
+  Shield_left: 0
   shield_left: {fileID: 169250502}
   Shield_front: 0
   shield_front: {fileID: 1636389353}

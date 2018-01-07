@@ -28,13 +28,7 @@ public class foe : MonoBehaviour {
 	void Update () {
 		
 	}
-	void OnTriggerEnter(Collider other)
-	{
-		Debug.Log("trigeriser");
-	}
-
-	void OnCollisionEnter(Collision other)
-	{
-		Debug.Log("colision");
+	void OnParticleCollision(GameObject other) {
+		Debug.Log("DEAD");
 	}
 }
