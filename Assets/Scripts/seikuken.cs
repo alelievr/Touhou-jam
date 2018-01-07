@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public static class Vector2Extension {
@@ -18,14 +19,23 @@ public static class Vector2Extension {
 }
 
 public class seikuken : MonoBehaviour {
-	public	List<ParticleSystem.Particle> inside;
+	public	List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
 	public	GameObject	Dodger;
-	public	GameObject	Limits;
+	// public	GameObject	Limits;
+	public	GameObject	Player;
+
+	[Space]
+	// public Slider		HPbar;
+	[Space]
+	public float		dodgePower;
 
 	private	Rigidbody	rb;
 	private	bool		inLimits;
+	private bool		busy;
+	private	float		starty;
+	private Vector3		dodgerpos;
 
-	public enum 		edashtype { throught, fuite, right, left, randomaxewithouttrought, random};
+	public enum 		edashtype { throught, fuite, right, left, randomaxewithouttrought, random, bcissapproved};
 
 	public	bool		candash = false;
 	public	float		dashdist = 3;
@@ -36,18 +46,32 @@ public class seikuken : MonoBehaviour {
 	public	float		cddash = 5;
 	private float		cdcurrent = 0;
 
+	public	float		speedMax = 100;
+	public	float		speedPower = 75;
+	[Space]
+	private	Text		HPtext;
+	private	Text		timetext;
+	public	float		pts;
+	public	float		HPmax = 1000000f;
+	public	float		HP;
 
 	// Use this for initialization
 	void Start () {
 		rb = Dodger.GetComponent<Rigidbody>();
+		// HPtext = HPbar.GetComponent<Text>();
 		inLimits = true;
+		busy = false;
+		starty = transform.position.y;
 		cdcurrent = cddash;
+		HP = HPmax;
+		inside = new List<ParticleSystem.Particle>();
 	}
-
+	
 	void FixedUpdate()
 	{
 		Refresh();
 		Dodge();
+		Move();
 	}
 
 	// Update is called once per frame
@@ -56,45 +80,9 @@ public class seikuken : MonoBehaviour {
 			cdcurrent -= Time.deltaTime;
 	}
 
-	void Refresh()
-	{
+	void Refresh() {
 		rb.velocity = Vector3.zero;
-	}
-
-	private Vector2 vectdirdash;
-	private Vector2 destdash;
-
-	void dash(Vector2 vectm)
-	{
-		edashtype tmpdashtype = dashtype;
-		if (dashdisttraveled == 0)
-		{
-			if (dashtype == edashtype.randomaxewithouttrought)
-				tmpdashtype = (edashtype)Random.Range((int)edashtype.fuite, (int)edashtype.randomaxewithouttrought);
-
-			if (tmpdashtype == edashtype.random)
-				vectdirdash = new Vector2(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f)).normalized;
-			else if (tmpdashtype == edashtype.fuite)
-				 vectdirdash = -vectm;
-			else if (tmpdashtype == edashtype.throught)
-				 vectdirdash = -vectm;
-			else if (tmpdashtype == edashtype.left)
-				vectdirdash = vectm.Rotate(-90f);
-			else if (tmpdashtype == edashtype.right)
-				vectdirdash = vectm.Rotate(90f);
-			vectdirdash = vectdirdash.normalized;
-			destdash = (Vector2)transform.position + vectdirdash * dashdist;
-		}
-
-		// the value of dashtime need to be greater than Time.deltaime (more than once)
-
-		rb.transform.position = Vector2.MoveTowards(transform.position, destdash, dashdist * Time.deltaTime / dashtime);
-		dashdisttraveled += dashdist * Time.deltaTime / dashtime;
-		if (dashdisttraveled >= dashdist)
-		{
-			dashdisttraveled = 0;	
-			cdcurrent = cddash;
-		}
+		busy = false;
 	}
 
 	Vector2 getvectomostnear()
@@ -109,32 +97,111 @@ public class seikuken : MonoBehaviour {
 		return -ret;
 	}
 
-	void Dodge()
-	{
-		Vector3 dir = new Vector3(0, 0);
+	/*STATIC*/private Vector2 vectdirdash;
+	/*STATIC*/ private Vector2 destdash;
 
+	void dash(Vector2 vectm, Vector3 dir)
+	{
+		edashtype tmpdashtype = dashtype;
+		if (dashdisttraveled == 0)
+		{
+			if (dashtype == edashtype.randomaxewithouttrought)
+				tmpdashtype = (edashtype)Random.Range((int)edashtype.fuite, (int)edashtype.randomaxewithouttrought);
+
+			if (tmpdashtype == edashtype.random)
+				vectdirdash = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
+			else if (tmpdashtype == edashtype.fuite)
+				 vectdirdash = -vectm;
+			else if (tmpdashtype == edashtype.throught)
+				 vectdirdash = -vectm;
+			else if (tmpdashtype == edashtype.left)
+				vectdirdash = vectm.Rotate(-90f);
+			else if (tmpdashtype == edashtype.right)
+				vectdirdash = vectm.Rotate(90f);
+			else if (tmpdashtype == edashtype.bcissapproved)
+				vectdirdash = dir;
+			vectdirdash = vectdirdash.normalized;
+			destdash = (Vector2)transform.position + vectdirdash * dashdist;
+			rb.detectCollisions = false;
+			Color tmp = Dodger.GetComponent<SpriteRenderer>().color;
+			tmp.a = 0.5f;
+			Dodger.GetComponent<SpriteRenderer>().color = tmp;
+		}
+
+		// the value of dashtime need to be greater than Time.deltaime (more than once)
+
+		rb.transform.position = Vector2.MoveTowards(transform.position, destdash, dashdist * Time.deltaTime / dashtime);
+		dashdisttraveled += dashdist * Time.deltaTime / dashtime;
+		if (dashdisttraveled >= dashdist)
+		{
+			dashdisttraveled = 0;	
+			cdcurrent = cddash;
+			rb.detectCollisions = true;
+			Color tmp = Dodger.GetComponent<SpriteRenderer>().color;
+			tmp.a = 1f;
+			Dodger.GetComponent<SpriteRenderer>().color = tmp;
+		}
+	}
+
+	bool Move() {	
+		return true;
+	}
+
+	void insiderefresh()
+	{
+		List<ParticleSystem> tmp = PlayerController.GetActiveParticleSystems();
+		inside = new List<ParticleSystem.Particle>();
+		List<ParticleSystem.Particle> inside2 = new List<ParticleSystem.Particle>();
+
+		foreach(ParticleSystem ps in tmp)
+			inside.AddRange(ps.GetComponent<TriggerDetector>().inside);
+	}
+
+	void Dodge() {
+		insiderefresh();
+		Vector3 dir = Vector3.zero;
 		if (inside != null) {
-			Vector2 vectmn = getvectomostnear();
-			// Debug.Log(candash);
-			Debug.Log(vectmn.magnitude);
-			// Debug.Log(cdcurrent);
-			if (dashdisttraveled != 0 || (candash == true && cdcurrent 	< 0 && vectmn.magnitude < dashdisttrigger))
-			{
-				Debug.Log("fdsf");
-				dash(vectmn);
-				return ;
-			}
 			for (int i = 0; i < inside.Count; i++) {
-				// Debug.Log(inside[i].position);
-				dir += -(inside[i].position - transform.position).normalized * (1 - ((inside[i].position - transform.position).magnitude / 1.5f)); // prendre radius
+				Vector3 delta = inside[i].position - transform.position;
+				Vector3 direction = -delta.normalized;
+				float directionForce = dodgePower / delta.magnitude;
+				Debug.DrawRay(transform.position, direction * directionForce, Color.cyan);
+				dir += direction * directionForce; // prendre radius
 			}
 		}
-		if (!inLimits) {
-			dir += (Limits.transform.position - transform.position);
-			// Debug.Log(Limits.transform.position - transform.position);
-		}
+		// if (!inLimits) {
+		// 	dir += (Limits.transform.position - transform.position);
+		// 	// Debug.Log(Limits.transform.position - transform.position);
+		// }
+		
+		dir = new Vector3(dir.x * 3f, dir.y, dir.z);
+		
+		// reste en face du joueur et ne monte pas trop haut
+		Vector3 targetx = new Vector3(Player.transform.position.x, starty, 0);
+		Vector3 deltaX = targetx - transform.position;
+		Vector3 directionX = deltaX.normalized * Mathf.Clamp(Mathf.Pow(deltaX.magnitude, 2), 0, 1000);
+		Debug.DrawRay(transform.position, directionX, Color.red);
+		dir += directionX;
+
+		Vector3 targety = new Vector3(0, starty, 0);
+		dir += (targety - transform.position) / 2f;
 		Debug.DrawRay(transform.position,dir, Color.green);
-		rb.AddForce(dir * 100);
+		
+		Vector2 vectmn = getvectomostnear();
+		if (dashdisttraveled != 0 || (candash == true && cdcurrent 	< 0 && vectmn.magnitude < dashdisttrigger))
+		{
+			Debug.Log("fdsf");
+			dash(vectmn, dir);
+			return ;
+		}
+		if (dir != Vector3.zero){
+			dir = dir * speedPower;
+			rb.AddForce(Vector3.ClampMagnitude(dir, speedMax));
+		}
+	}
+
+	Vector3 getDodgerPos() {
+		return (new Vector3(transform.position.x, transform.position.y + 0.3f, 0));
 	}
 
 	void OnTriggerEnter(Collider other)
