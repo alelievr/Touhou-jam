@@ -42,6 +42,7 @@ public class ParticleSystemData
 	public float 	yvel = 0f;
 	public float 	xforce = 0f;
 	public float 	yforce = 0f;
+
 	public float	radius = 1;
     public float	arc = 360;
     public float	rotspeed = 1;
