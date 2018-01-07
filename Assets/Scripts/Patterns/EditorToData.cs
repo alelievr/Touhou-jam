@@ -34,13 +34,11 @@ public class EditorToData : MonoBehaviour
 
 	float	oldfirerate = 20f;
 
-	ParticleSystemScript pss;
 	ParticleSystemData psd;
 	public GameObject	psh;
 	void Start()
 	{
 		psd = new ParticleSystemData();
-		pss = psh.GetComponent<ParticleSystemScript>();
 	}
 
 	public void	SpeedSlider(float speed)
@@ -70,6 +68,7 @@ public class EditorToData : MonoBehaviour
 		{
 			psd.isBurst = false;
 			psd.rate = oldfirerate;
+			
 		}
 	}
 
@@ -134,6 +133,7 @@ public class EditorToData : MonoBehaviour
 	public void	rotationSlider(float rotation)
 	{
 		psd.zrot = rotation;
+		ParticleSystemScript.setconestartrot = false;
 	}
 
 	public void	rotateSlider(float rotation)
@@ -176,11 +176,13 @@ public class EditorToData : MonoBehaviour
 	void Update () {
 		// if (psd.isBurst == true)
 		// 	psd.rate = 0;
-		pss.SetPSFromData(psh, psd);
+		ParticleSystemScript.SetPSHromData(psh, psd);
 		if (true)
 		{
-			Debug.Log(psd.isBurst);
-			Debug.Log(psd.rate);
+			// Debug.Log(psd.isBurst);
+			// Debug.Log(psd.rate);
+			// Debug.Log(psd.mode);
+			// Debug.Log(psd.shape);
 		}
 	}
 }
