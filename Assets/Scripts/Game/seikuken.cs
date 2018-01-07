@@ -148,12 +148,7 @@ public class seikuken : MonoBehaviour {
 		List<ParticleSystem.Particle> inside2 = new List<ParticleSystem.Particle>();
 
 		foreach(ParticleSystem ps in tmp)
-		{
-			Debug.Log(ps);
-			foreach (var d in ps.GetComponent<TriggerDetector>().inside)
-				Debug.Log("d: " + d);
 			inside.AddRange(ps.GetComponent<TriggerDetector>().inside);
-		}
 	}
 
 	void Dodge() {
@@ -165,13 +160,9 @@ public class seikuken : MonoBehaviour {
 				Vector3 direction = -delta.normalized;
 				float directionForce = dodgePower / delta.magnitude;
 				Debug.DrawRay(transform.position, direction * directionForce, Color.cyan);
-				dir += direction * directionForce; // prendre radius
+				dir += direction * directionForce;
 			}
 		}
-		// if (!inLimits) {
-		// 	dir += (Limits.transform.position - transform.position);
-		// 	// Debug.Log(Limits.transform.position - transform.position);
-		// }
 		
 		dir = new Vector3(dir.x * 3f, dir.y, dir.z);
 		
@@ -183,8 +174,11 @@ public class seikuken : MonoBehaviour {
 		dir += directionX;
 
 		Vector3 targety = new Vector3(0, starty, 0);
-		dir += (targety - transform.position) / 2f;
+		// Vector3 targetxd = new Vector3(Player.transform.position.x, 0, 0);
+		// dir += (targety - new Vtransform.position) / 2f;
+		Debug.Log("avt : " + dir);
 		Debug.DrawRay(transform.position,dir, Color.green);
+		Debug.DrawRay(transform.position, dir, Color.yellow);
 		
 		Vector2 vectmn = getvectomostnear();
 		if (dashdisttraveled != 0 || (candash == true && cdcurrent 	< 0 && vectmn.magnitude < dashdisttrigger))
@@ -193,8 +187,10 @@ public class seikuken : MonoBehaviour {
 			dash(vectmn, dir);
 			return ;
 		}
+		Debug.Log("after : " + dir);
 		if (dir != Vector3.zero){
 			dir = dir * speedPower;
+			Debug.Log("after : " + dir);
 			rb.AddForce(Vector3.ClampMagnitude(dir, speedMax));
 		}
 	}
