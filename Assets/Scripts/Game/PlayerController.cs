@@ -125,20 +125,21 @@ public class PlayerController : MonoBehaviour
 		foreach (var particleSystem in patterns[oldActivePattern].particleSystems)
 		{
 			var emission = particleSystem.emission;
+			particleSystem.Stop();
 			emission.enabled = false;
 		}
 
 		foreach (var particleSystem in patterns[activePattern].particleSystems)
 		{
 			var emission = particleSystem.emission;
+			particleSystem.Play();
 			emission.enabled = true;
 		}
 
 		if (spellcardIndex != 0)
 		{
-			Debug.Log("pattern: " + activePattern);
 			GameGUIManager.ActivateSpellCard(activePattern - 1, patterns[activePattern].cooldown, patterns[activePattern].duration);
-			StartCoroutine(RestartDefaultPattern(patterns[activePattern].cooldown));
+			StartCoroutine(RestartDefaultPattern(patterns[activePattern].duration));
 		}
 	}
 	

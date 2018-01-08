@@ -6,6 +6,7 @@ public static class Global
 {
 	static string saveIndexKey = "saveIndex";
 	static string playerPseudoKey = "playerPseudo";
+	static string levelKey = "levelkey";
 
 	public static int GetCurrentSaveIndex()
 	{
@@ -27,5 +28,16 @@ public static class Global
 	{
 		PlayerPrefs.SetString(playerPseudoKey, pseudo);
 		PlayerPrefs.Save();
+	}
+
+	public static void SetGameLevel(int level)
+	{
+		PlayerPrefs.SetInt(levelKey, level);
+		PlayerPrefs.Save();
+	}
+
+	public static int GetGameLevel()
+	{
+		return PlayerPrefs.GetInt(levelKey, 0);
 	}
 }

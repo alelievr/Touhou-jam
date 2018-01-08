@@ -63,7 +63,7 @@ public class LeaderBoardDisplay : MonoBehaviour
 			var cell = cellObject.GetComponent< LeaderBoardCell >();
 			
 			try {
-				cell.UpdateProperties(long.Parse(values[1]), 10000, values[0]);
+				cell.UpdateProperties(long.Parse(values[1]), 10000000000, values[0]);
 			} catch (Exception e) {
 				Debug.LogError(e);
 				Destroy(cell);

@@ -9,11 +9,11 @@ public class LeaderBoardCell : MonoBehaviour
 	public Text		pointText;
 	public Text		nameText;
 
-	public void UpdateProperties(long points, int maxPoints, string name)
+	public void UpdateProperties(long points, long maxPoints, string name)
 	{
 		fillImage.fillAmount = (float)points / (float)maxPoints;
 
-		pointText.text = points + "/" + maxPoints;
+		pointText.text = points.ToString();
 
 		nameText.text = name;
 	}

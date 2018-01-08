@@ -101,7 +101,6 @@ public static class ParticleSystemScript
 		}
 		else if (psd.shape == ParticleEmissionShape.Edge)
 		{
-			Debug.Log("Edge");
 			sh.shapeType = ParticleSystemShapeType.SingleSidedEdge;
 			sh.arcMode = SetPSShape(psd);
 			sh.radius = psd.radius;

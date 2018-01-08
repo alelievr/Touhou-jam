@@ -23,10 +23,32 @@ public class foe : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		shield_right.SetActive(Shield_right);
-		shield_left.SetActive(Shield_left);
-		shield_front.SetActive(Shield_front);
-		shield_back.SetActive(Shield_back);
+
+		int level = Global.GetGameLevel();
+
+		switch (level)
+		{
+			case 0:
+				break ;
+			case 1:
+				shield_back.SetActive(true);
+				break ;
+			case 2:
+				shield_right.SetActive(true);
+				shield_left.SetActive(true);
+				break ;
+			case 3:
+				shield_right.SetActive(true);
+				shield_left.SetActive(true);
+				shield_front.SetActive(true);
+				shield_back.SetActive(true);
+				break ;
+		}
+
+		// shield_right.SetActive(Shield_right);
+		// shield_left.SetActive(Shield_left);
+		// shield_front.SetActive(Shield_front);
+		// shield_back.SetActive(Shield_back);
 			
 	}
 	

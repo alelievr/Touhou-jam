@@ -23,6 +23,12 @@ public class SceneTransition : MonoBehaviour
 	{
 		instance = this;
 	}
+	
+	public void LoadGameScene(int level)
+	{
+		Global.SetGameLevel(level);
+		SceneManager.LoadScene("GameBciss");
+	}
 
 	public void LoadScene(string name)
 	{

@@ -39,6 +39,7 @@ public class GameGUIManager : MonoBehaviour
 
 	static IEnumerator Cooldown(Image cooldownImage, float duration, int spellcardIndex)
 	{
+		Debug.Log("cooldown: " + duration);
 		if (cooldowns[spellcardIndex])
 		{
 			// Debug.Log("cooldown update for " + spellcardIndex + ": " + cooldownValues[spellcardIndex] + ", d: " + duration + ", col: " + cooldownElapsed[spellcardIndex]);

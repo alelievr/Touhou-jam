@@ -59,6 +59,14 @@ public class seikuken : MonoBehaviour {
 		starty = transform.position.y;
 		cdcurrent = cddash;
 		inside = new List<ParticleSystem.Particle>();
+
+		int level = Global.GetGameLevel();
+
+		if (level == 3)
+		{
+			speedPower = 100;
+			speedMax = 500;
+		}
 	}
 	
 	void FixedUpdate()
@@ -176,21 +184,17 @@ public class seikuken : MonoBehaviour {
 		Vector3 targety = new Vector3(0, starty, 0);
 		// Vector3 targetxd = new Vector3(Player.transform.position.x, 0, 0);
 		// dir += (targety - new Vtransform.position) / 2f;
-		Debug.Log("avt : " + dir);
 		Debug.DrawRay(transform.position,dir, Color.green);
 		Debug.DrawRay(transform.position, dir, Color.yellow);
 		
 		Vector2 vectmn = getvectomostnear();
 		if (dashdisttraveled != 0 || (candash == true && cdcurrent 	< 0 && vectmn.magnitude < dashdisttrigger))
 		{
-			Debug.Log("fdsf");
 			dash(vectmn, dir);
 			return ;
 		}
-		Debug.Log("after : " + dir);
 		if (dir != Vector3.zero){
 			dir = dir * speedPower;
-			Debug.Log("after : " + dir);
 			rb.AddForce(Vector3.ClampMagnitude(dir, speedMax));
 		}
 	}

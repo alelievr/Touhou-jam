@@ -118,8 +118,12 @@ public class ConfigPatterns : MonoBehaviour
 		foreach (var particleSystemData in currentPatternData.particlePatterns)
 			duration = Mathf.Max(duration, particleSystemData.startDelay + particleSystemData.duration);
 		
-		currentPatternData.duration = duration;
-		currentPatternData.cooldown = duration * 2;
+		duration = Mathf.Clamp(duration, .5f, 60);
+
+		currentPatternData.duration = duration / 2;
+		currentPatternData.cooldown = duration;
+		
+		Debug.Log("duration = " + duration);
 		Debug.Log("saving " + currentPatternData.name);
 
 		BinaryLoader.SavePatternData(currentPatternData, currentSpellcard, currentSave);

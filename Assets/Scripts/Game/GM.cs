@@ -20,19 +20,22 @@ public class GM : MonoBehaviour
 	public	long		Highpts;
 	private	Text		Highscoretext;
 
+	[Header("End Panel !")]
+	public GameObject	endPanel;
+
 	// Use this for initialization
 	void Start () {
 		timetext = timeUi.GetComponent<Text>();
 		scoretext = score.GetComponent<Text>();
 		Highscoretext = Highscore.GetComponent<Text>();
-		// Debug.Log(PlayerPrefs.GetString("HighScore" + SceneManager.GetActiveScene().name));
-		if (PlayerPrefs.GetString("HighScore" + SceneManager.GetActiveScene().name) == "")
+		// Debug.Log(PlayerPrefs.GetString("HighScore" + Global.GetGameLevel()));
+		if (PlayerPrefs.GetString("HighScore" + Global.GetGameLevel()) == "")
 		{
 			Highpts = 0;
-			PlayerPrefs.SetString("HighScore" + SceneManager.GetActiveScene().name, "0");
+			PlayerPrefs.SetString("HighScore" + Global.GetGameLevel(), "0");
 		}
 		else 
-			Highpts = long.Parse(PlayerPrefs.GetString("HighScore" + SceneManager.GetActiveScene().name));
+			Highpts = long.Parse(PlayerPrefs.GetString("HighScore" + Global.GetGameLevel()));
 		Highscoretext.text = Highpts.ToString();
 	}
 	
@@ -51,7 +54,12 @@ public class GM : MonoBehaviour
 		pts += i;
 	}
 	public	void Win(bool victory) {
-		if (long.Parse(PlayerPrefs.GetString("HighScore" + SceneManager.GetActiveScene().name)) < pts)
-			PlayerPrefs.SetString("HighScore" + SceneManager.GetActiveScene().name, pts.ToString());
+		if (victory == false)
+			pts -= 5000000000;
+		if (long.Parse(PlayerPrefs.GetString("HighScore" + Global.GetGameLevel())) < pts)
+			PlayerPrefs.SetString("HighScore" + Global.GetGameLevel(), pts.ToString());
+		
+			endPanel.SetActive(true);
+		Time.timeScale = 0;
 	}
 }
